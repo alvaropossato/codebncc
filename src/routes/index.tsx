@@ -406,13 +406,24 @@ function Index() {
                   </ol>
                 </div>
 
+                <div className="mt-3 grid gap-3 lg:grid-cols-2">
+                  <AtividadeCard rotulo="Prática plugada" atividade={pratica.plugada} destaque />
+                  <AtividadeCard
+                    rotulo="Prática desplugada"
+                    atividade={pratica.desplugadaAtividade}
+                  />
+                </div>
+
                 <div className="mt-3 rounded-2xl border border-white/10 bg-ink-soft/50 p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50">
-                    Habilidade {pratica.codigo} · versão desplugada
+                    Habilidade {pratica.codigo}
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-mist/70">{pratica.habilidade}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-mist/70">{pratica.desplugada}</p>
+                  {pratica.desplugada && (
+                    <p className="mt-2 text-sm leading-relaxed text-mist/70">{pratica.desplugada}</p>
+                  )}
                 </div>
+
               </>
             )}
           </section>
