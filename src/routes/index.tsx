@@ -357,10 +357,23 @@ function Index() {
                   <span className="rounded-full border border-white/10 bg-ink-soft/60 px-3 py-1 text-xs text-mist/70">
                     {disciplina}
                   </span>
+                  <span className="rounded-full border border-white/10 bg-ink-soft/60 px-3 py-1 text-xs text-mist/70">
+                    {conteudoAtual}
+                  </span>
                   <span className="rounded-full border border-aurora/30 bg-aurora/10 px-3 py-1 text-xs text-aurora">
                     {eixo}
                   </span>
                 </div>
+
+                {pratica.conexao && (
+                  <div className="mt-5 rounded-2xl border border-aurora/25 bg-aurora/[0.07] p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-aurora">
+                      Conteúdo PCN × BNCC Computação
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-mist/75">{pratica.conexao}</p>
+                  </div>
+                )}
+
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-2xl border border-white/10 bg-ink-soft/50 p-4">
