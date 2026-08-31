@@ -8,6 +8,9 @@ import {
   SERIES,
   EIXOS,
   DURACOES,
+  CONTEUDOS_PCN,
+  TEMAS_TRANSVERSAIS,
+  type Atividade,
   type Pratica,
 } from "@/lib/curriculo";
 
@@ -38,10 +41,25 @@ function Index() {
   const [duracao, setDuracao] = useState<string>(DURACOES[1]);
   const [eixo, setEixo] = useState<string>(EIXOS[0]);
   const [competencia, setCompetencia] = useState("");
+  const [tema, setTema] = useState<string>(TEMAS_TRANSVERSAIS[0]);
+  const conteudos = CONTEUDOS_PCN[disciplina] ?? [];
+  const [conteudo, setConteudo] = useState<string>(conteudos[0] ?? "");
+
+  const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
 
   const mutation = useMutation<Pratica>({
     mutationFn: () =>
-      gerar({ data: { disciplina, serie, eixo, duracao, competencia } }),
+      gerar({
+        data: {
+          disciplina,
+          serie,
+          eixo,
+          duracao,
+          conteudo: conteudoAtual,
+          tema,
+          competencia,
+        },
+      }),
   });
 
   const pratica = mutation.data;
@@ -103,7 +121,10 @@ function Index() {
                   <select
                     id="disciplina"
                     value={disciplina}
-                    onChange={(e) => setDisciplina(e.target.value)}
+                    onChange={(e) => {
+                      setDisciplina(e.target.value);
+                      setConteudo(CONTEUDOS_PCN[e.target.value]?.[0] ?? "");
+                    }}
                     className="field field-focus pr-10"
                   >
                     {DISCIPLINAS.map((d) => (
@@ -117,6 +138,59 @@ function Index() {
                   </span>
                 </div>
               </div>
+
+              <div>
+                <label
+                  htmlFor="conteudo"
+                  className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50"
+                >
+                  Conteúdo (PCN)
+                </label>
+                <div className="relative mt-2">
+                  <select
+                    id="conteudo"
+                    value={conteudoAtual}
+                    onChange={(e) => setConteudo(e.target.value)}
+                    className="field field-focus pr-10"
+                  >
+                    {conteudos.map((c) => (
+                      <option key={c} value={c} className="bg-ink-soft">
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-mist/40">
+                    ▾
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="tema"
+                  className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50"
+                >
+                  Tema transversal
+                </label>
+                <div className="relative mt-2">
+                  <select
+                    id="tema"
+                    value={tema}
+                    onChange={(e) => setTema(e.target.value)}
+                    className="field field-focus pr-10"
+                  >
+                    {TEMAS_TRANSVERSAIS.map((t) => (
+                      <option key={t} value={t} className="bg-ink-soft">
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-mist/40">
+                    ▾
+                  </span>
+                </div>
+              </div>
+
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -283,10 +357,23 @@ function Index() {
                   <span className="rounded-full border border-white/10 bg-ink-soft/60 px-3 py-1 text-xs text-mist/70">
                     {disciplina}
                   </span>
+                  <span className="rounded-full border border-white/10 bg-ink-soft/60 px-3 py-1 text-xs text-mist/70">
+                    {conteudoAtual}
+                  </span>
                   <span className="rounded-full border border-aurora/30 bg-aurora/10 px-3 py-1 text-xs text-aurora">
                     {eixo}
                   </span>
                 </div>
+
+                {pratica.conexao && (
+                  <div className="mt-5 rounded-2xl border border-aurora/25 bg-aurora/[0.07] p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-aurora">
+                      Conteúdo PCN × BNCC Computação
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-mist/75">{pratica.conexao}</p>
+                  </div>
+                )}
+
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-2xl border border-white/10 bg-ink-soft/50 p-4">
@@ -319,13 +406,24 @@ function Index() {
                   </ol>
                 </div>
 
+                <div className="mt-3 grid gap-3 lg:grid-cols-2">
+                  <AtividadeCard rotulo="Prática plugada" atividade={pratica.plugada} destaque />
+                  <AtividadeCard
+                    rotulo="Prática desplugada"
+                    atividade={pratica.desplugadaAtividade}
+                  />
+                </div>
+
                 <div className="mt-3 rounded-2xl border border-white/10 bg-ink-soft/50 p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50">
-                    Habilidade {pratica.codigo} · versão desplugada
+                    Habilidade {pratica.codigo}
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-mist/70">{pratica.habilidade}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-mist/70">{pratica.desplugada}</p>
+                  {pratica.desplugada && (
+                    <p className="mt-2 text-sm leading-relaxed text-mist/70">{pratica.desplugada}</p>
+                  )}
                 </div>
+
               </>
             )}
           </section>
@@ -340,15 +438,70 @@ function Index() {
   );
 }
 
+function AtividadeCard({
+  rotulo,
+  atividade,
+  destaque = false,
+}: {
+  rotulo: string;
+  atividade: Atividade;
+  destaque?: boolean;
+}) {
+  if (!atividade.titulo && atividade.etapas.length === 0) return null;
+  return (
+    <div
+      className={`rounded-2xl border p-4 ${
+        destaque ? "border-aurora/30 bg-aurora/[0.06]" : "border-white/10 bg-ink-soft/50"
+      }`}
+    >
+      <p
+        className={`text-xs font-semibold uppercase tracking-[0.14em] ${
+          destaque ? "text-aurora" : "text-mist/50"
+        }`}
+      >
+        {rotulo}
+      </p>
+      <p className="mt-2 font-display text-base font-bold text-white">{atividade.titulo}</p>
+      {atividade.materiais && (
+        <p className="mt-1 text-xs leading-relaxed text-mist/55">
+          Materiais: {atividade.materiais}
+        </p>
+      )}
+      <ol className="mt-3 space-y-2 text-sm text-mist/75">
+        {atividade.etapas.map((etapa, i) => (
+          <li key={i} className="flex gap-3">
+            <span className="grid size-5 shrink-0 place-items-center rounded-full bg-aurora/15 text-[11px] font-bold text-aurora">
+              {i + 1}
+            </span>
+            {etapa}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function atividadeTexto(rotulo: string, a: Atividade) {
+  return [
+    `${rotulo}: ${a.titulo}`,
+    a.materiais ? `Materiais: ${a.materiais}` : "",
+    a.etapas.map((e, i) => `${i + 1}. ${e}`).join("\n"),
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
 function toTexto(p: Pratica) {
   return [
     p.titulo,
     `Habilidade ${p.codigo}: ${p.habilidade}`,
     `Resumo: ${p.resumo}`,
+    `Conexão PCN × Computação: ${p.conexao}`,
     `Objetivo: ${p.objetivo}`,
     `Recursos: ${p.recursos}`,
     `Etapas:\n${p.etapas.map((e, i) => `${i + 1}. ${e}`).join("\n")}`,
-    `Versão desplugada: ${p.desplugada}`,
+    atividadeTexto("Prática plugada", p.plugada),
+    atividadeTexto("Prática desplugada", p.desplugadaAtividade),
     `Avaliação: ${p.avaliacao}`,
   ].join("\n\n");
 }
