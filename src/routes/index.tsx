@@ -121,7 +121,10 @@ function Index() {
                   <select
                     id="disciplina"
                     value={disciplina}
-                    onChange={(e) => setDisciplina(e.target.value)}
+                    onChange={(e) => {
+                      setDisciplina(e.target.value);
+                      setConteudo(CONTEUDOS_PCN[e.target.value]?.[0] ?? "");
+                    }}
                     className="field field-focus pr-10"
                   >
                     {DISCIPLINAS.map((d) => (
@@ -135,6 +138,59 @@ function Index() {
                   </span>
                 </div>
               </div>
+
+              <div>
+                <label
+                  htmlFor="conteudo"
+                  className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50"
+                >
+                  Conteúdo (PCN)
+                </label>
+                <div className="relative mt-2">
+                  <select
+                    id="conteudo"
+                    value={conteudoAtual}
+                    onChange={(e) => setConteudo(e.target.value)}
+                    className="field field-focus pr-10"
+                  >
+                    {conteudos.map((c) => (
+                      <option key={c} value={c} className="bg-ink-soft">
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-mist/40">
+                    ▾
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="tema"
+                  className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50"
+                >
+                  Tema transversal
+                </label>
+                <div className="relative mt-2">
+                  <select
+                    id="tema"
+                    value={tema}
+                    onChange={(e) => setTema(e.target.value)}
+                    className="field field-focus pr-10"
+                  >
+                    {TEMAS_TRANSVERSAIS.map((t) => (
+                      <option key={t} value={t} className="bg-ink-soft">
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-mist/40">
+                    ▾
+                  </span>
+                </div>
+              </div>
+
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
