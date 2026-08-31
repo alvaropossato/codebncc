@@ -78,7 +78,7 @@ function Index() {
       setErroLink("");
       if (navigator.share) {
         try {
-          await navigator.share({ title: mutation.data?.titulo, url });
+          await navigator.share({ title: mutation.data?.titulo ?? "Prática", url });
         } catch {
           /* usuário cancelou */
         }

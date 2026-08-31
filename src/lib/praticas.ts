@@ -28,7 +28,7 @@ export async function salvarPratica(
     .insert({
       user_id: userId,
       titulo: pratica.titulo,
-      dados: pratica as unknown as Record<string, unknown>,
+      dados: pratica as never,
       ...ctx,
     })
     .select("id")

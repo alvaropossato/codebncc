@@ -119,7 +119,7 @@ function Historico() {
                 <button
                   onClick={async () => {
                     await excluirPratica(p.id);
-                    qc.invalidateQueries({ queryKey: ["historico", user.id] });
+                    qc.invalidateQueries({ queryKey: ["historico", user?.id] });
                   }}
                   className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/70"
                 >
