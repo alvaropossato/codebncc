@@ -71,7 +71,19 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.875rem;
+  --ink: oklch(0.14 0.026 265);
+  --ink-soft: oklch(0.2 0.035 265);
+  --aurora: oklch(0.85 0.13 178);
+  --aurora2: oklch(0.66 0.18 288);
+  --aurora3: oklch(0.75 0.18 349);
+  --mist: oklch(0.85 0.025 255);
+  --gradient-aurora: linear-gradient(100deg, var(--aurora), var(--aurora2) 45%, var(--aurora3));
+  --glow-aurora:
+    radial-gradient(420px 320px at 18% 12%, color-mix(in oklab, var(--aurora) 28%, transparent), transparent 60%),
+    radial-gradient(520px 420px at 82% 8%, color-mix(in oklab, var(--aurora2) 32%, transparent), transparent 62%),
+    radial-gradient(560px 460px at 60% 96%, color-mix(in oklab, var(--aurora3) 24%, transparent), transparent 60%),
+    radial-gradient(400px 400px at 40% 60%, color-mix(in oklab, var(--aurora) 12%, transparent), transparent 70%);
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -147,7 +159,44 @@
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--ink);
+    color: var(--mist);
+    font-family: var(--font-sans);
+  }
+}
+
+@utility aurora-glow {
+  background: var(--glow-aurora);
+}
+
+@utility aurora-text {
+  background: var(--gradient-aurora);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility panel {
+  border: 1px solid color-mix(in oklab, white 10%, transparent);
+  background: color-mix(in oklab, white 4%, transparent);
+  backdrop-filter: blur(20px);
+}
+
+@utility field {
+  width: 100%;
+  appearance: none;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in oklab, white 10%, transparent);
+  background: color-mix(in oklab, var(--ink-soft) 70%, transparent);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  outline: none;
+}
+
+@utility field-focus {
+  &:focus {
+    border-color: color-mix(in oklab, var(--aurora) 60%, transparent);
   }
 }
