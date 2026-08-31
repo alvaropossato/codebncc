@@ -8,6 +8,9 @@ import {
   SERIES,
   EIXOS,
   DURACOES,
+  CONTEUDOS_PCN,
+  TEMAS_TRANSVERSAIS,
+  type Atividade,
   type Pratica,
 } from "@/lib/curriculo";
 
