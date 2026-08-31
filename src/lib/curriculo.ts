@@ -46,14 +46,113 @@ export const CODIGOS: Record<string, string[]> = {
   EF09: ["EF09CO01","EF09CO02","EF09CO03","EF09CO04","EF09CO05","EF09CO06","EF09CO07","EF09CO08","EF09CO09","EF09CO10"],
 };
 
+/** Blocos de conteúdo dos PCN (Ensino Fundamental 1º ao 5º ano), por área. */
+export const CONTEUDOS_PCN: Record<string, string[]> = {
+  "Língua Portuguesa": [
+    "Prática de leitura e compreensão de textos",
+    "Prática de produção de textos escritos",
+    "Linguagem oral: escuta e produção",
+    "Análise e reflexão sobre a língua (ortografia e gramática)",
+    "Gêneros textuais e suportes de circulação",
+    "Literatura infantil e leitura literária",
+  ],
+  Matemática: [
+    "Números e operações",
+    "Espaço e forma (geometria)",
+    "Grandezas e medidas",
+    "Tratamento da informação (tabelas e gráficos)",
+    "Resolução de problemas",
+    "Frações e números decimais",
+  ],
+  "Ciências da Natureza": [
+    "Ambiente: ecossistemas e cadeias alimentares",
+    "Ser humano e saúde",
+    "Recursos tecnológicos e transformação de materiais",
+    "Água, solo, ar e ciclos da natureza",
+    "Terra e Universo",
+    "Seres vivos: classificação e ciclos de vida",
+  ],
+  História: [
+    "História local e do cotidiano",
+    "Organização social e trabalho",
+    "Comunidades e povos indígenas e afro-brasileiros",
+    "Memória, fontes históricas e patrimônio",
+    "Tempo, marcação e periodização",
+    "Deslocamentos, migrações e cidade",
+  ],
+  Geografia: [
+    "O espaço vivido: casa, escola e bairro",
+    "Paisagem urbana e rural",
+    "Representação do espaço: mapas e maquetes",
+    "População, trabalho e cultura",
+    "Natureza, sociedade e meio ambiente",
+    "Orientação, localização e pontos de referência",
+  ],
+  Arte: [
+    "Artes visuais: produção e leitura de imagens",
+    "Música: som, ritmo e paisagem sonora",
+    "Teatro: jogo dramático e narrativa cênica",
+    "Dança e movimento",
+    "Patrimônio cultural e produção artística local",
+  ],
+  "Educação Física": [
+    "Jogos e brincadeiras da cultura popular",
+    "Esportes e regras",
+    "Ginástica e movimento corporal",
+    "Danças e expressão corporal",
+    "Corpo, saúde e lazer",
+  ],
+  "Ensino Religioso": [
+    "Diversidade cultural e religiosa",
+    "Valores, ética e convivência",
+    "Símbolos, ritos e narrativas",
+    "Respeito às diferenças e cultura de paz",
+  ],
+  "Computação e Tecnologia": [
+    "Algoritmos e sequências",
+    "Dados, informação e representação",
+    "Segurança, privacidade e cidadania digital",
+    "Mídias digitais e produção de conteúdo",
+    "Hardware, software e redes",
+    "Robótica e automação",
+  ],
+  "Campos de Experiência (Ed. Infantil)": [
+    "O eu, o outro e o nós",
+    "Corpo, gestos e movimentos",
+    "Traços, sons, cores e formas",
+    "Escuta, fala, pensamento e imaginação",
+    "Espaços, tempos, quantidades, relações e transformações",
+  ],
+};
+
+/** Temas transversais dos PCN. */
+export const TEMAS_TRANSVERSAIS = [
+  "Nenhum",
+  "Ética",
+  "Meio Ambiente",
+  "Saúde",
+  "Pluralidade Cultural",
+  "Orientação Sexual",
+  "Trabalho e Consumo",
+] as const;
+
+export type Atividade = {
+  titulo: string;
+  materiais: string;
+  etapas: string[];
+};
+
 export type Pratica = {
   titulo: string;
   codigo: string;
   habilidade: string;
   resumo: string;
+  conexao: string;
   objetivo: string;
   recursos: string;
   avaliacao: string;
   etapas: string[];
+  plugada: Atividade;
+  desplugadaAtividade: Atividade;
   desplugada: string;
 };
