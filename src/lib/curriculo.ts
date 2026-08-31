@@ -1,6 +1,7 @@
 export const DISCIPLINAS = [
   "Computação e Tecnologia",
   "Língua Portuguesa",
+  "Língua Inglesa",
   "Matemática",
   "Ciências da Natureza",
   "História",
@@ -10,6 +11,7 @@ export const DISCIPLINAS = [
   "Ensino Religioso",
   "Campos de Experiência (Ed. Infantil)",
 ] as const;
+
 
 export const SERIES = [
   { value: "Educação Infantil – 4 e 5 anos", prefix: "EI03" },
@@ -56,9 +58,15 @@ export const CONTEUDOS_PCN: Record<string, string[]> = {
     "Gêneros textuais e suportes de circulação",
     "Literatura infantil e leitura literária",
   ],
+  "Língua Inglesa": [
+    "Vocabulário do cotidiano e primeiras palavras",
+    "Canções, rimas e brincadeiras em língua inglesa",
+    "Leitura de imagens e palavras em contextos digitais",
+  ],
   Matemática: [
     "Números e operações",
     "Espaço e forma (geometria)",
+
     "Grandezas e medidas",
     "Tratamento da informação (tabelas e gráficos)",
     "Resolução de problemas",
@@ -125,6 +133,91 @@ export const CONTEUDOS_PCN: Record<string, string[]> = {
   ],
 };
 
+/** Blocos de conteúdo dos PCN (Ensino Fundamental 6º ao 9º ano — terceiro e quarto ciclos), por área. */
+export const CONTEUDOS_PCN_FINAIS: Record<string, string[]> = {
+  "Língua Portuguesa": [
+    "Leitura e interpretação de textos de diferentes gêneros",
+    "Produção de textos escritos: argumentação e coesão",
+    "Linguagem oral: debate, seminário e exposição",
+    "Análise linguística: sintaxe, semântica e variação",
+    "Mídia, publicidade e leitura crítica de textos",
+    "Literatura: narrativa, poesia e leitura literária",
+  ],
+  "Língua Inglesa": [
+    "Compreensão oral e escrita em língua estrangeira",
+    "Produção escrita: bilhetes, e-mails e postagens",
+    "Vocabulário temático e estratégias de leitura",
+    "Aspectos interculturais e usos da língua no mundo digital",
+  ],
+  Matemática: [
+    "Números racionais, inteiros e operações",
+    "Álgebra: expressões, equações e funções",
+    "Geometria: figuras planas, espaciais e transformações",
+    "Grandezas, medidas e proporcionalidade",
+    "Tratamento da informação: estatística e probabilidade",
+    "Resolução de problemas e modelagem matemática",
+  ],
+  "Ciências da Natureza": [
+    "Vida e ambiente: ecossistemas e biodiversidade",
+    "Ser humano e saúde: corpo, sexualidade e prevenção",
+    "Tecnologia e sociedade: ciência, técnica e impactos",
+    "Terra e Universo: sistema solar e dinâmica terrestre",
+    "Matéria e energia: transformações químicas e físicas",
+    "Recursos naturais, energia e sustentabilidade",
+  ],
+  História: [
+    "Formação do mundo moderno e contemporâneo",
+    "Brasil: colônia, império e república",
+    "Trabalho, cidadania e movimentos sociais",
+    "Diversidade cultural: povos indígenas, africanos e migrações",
+    "Fontes históricas, memória e patrimônio",
+    "Conflitos, poder e relações internacionais",
+  ],
+  Geografia: [
+    "O espaço geográfico e a produção do território",
+    "Urbanização, população e redes",
+    "Globalização, economia e trabalho",
+    "Cartografia, geotecnologias e representação do espaço",
+    "Meio ambiente, clima e riscos socioambientais",
+    "Brasil e mundo: regionalizações e desigualdades",
+  ],
+  Arte: [
+    "Artes visuais: linguagem, imagem e produção contemporânea",
+    "Música: elementos sonoros e produção musical",
+    "Teatro: dramaturgia, cena e performance",
+    "Dança: composição e expressão corporal",
+    "Arte, mídia e cultura digital",
+  ],
+  "Educação Física": [
+    "Esportes coletivos e individuais: técnica e tática",
+    "Ginásticas de condicionamento e consciência corporal",
+    "Lutas e jogos de oposição",
+    "Danças urbanas e manifestações da cultura corporal",
+    "Saúde, atividade física e análise de desempenho",
+  ],
+  "Ensino Religioso": [
+    "Tradições religiosas e diversidade cultural",
+    "Ética, valores e projetos de vida",
+    "Direitos humanos, respeito e cultura de paz",
+    "Narrativas, símbolos e sentidos da existência",
+  ],
+  "Computação e Tecnologia": [
+    "Algoritmos, programação e depuração",
+    "Estruturas de dados e representação da informação",
+    "Redes, internet e infraestrutura digital",
+    "Segurança, privacidade e cidadania digital",
+    "Produção de mídias digitais e autoria",
+    "Robótica, automação e inteligência artificial",
+  ],
+};
+
+/** Retorna os conteúdos dos PCN adequados à disciplina e ao ano escolhido. */
+export function conteudosPara(disciplina: string, serie: string): string[] {
+  const finais = /^[6789]º ano$/.test(serie);
+  const fonte = finais ? CONTEUDOS_PCN_FINAIS : CONTEUDOS_PCN;
+  return fonte[disciplina] ?? CONTEUDOS_PCN[disciplina] ?? [];
+}
+
 /** Temas transversais dos PCN. */
 export const TEMAS_TRANSVERSAIS = [
   "Nenhum",
@@ -135,6 +228,7 @@ export const TEMAS_TRANSVERSAIS = [
   "Orientação Sexual",
   "Trabalho e Consumo",
 ] as const;
+
 
 export type Atividade = {
   titulo: string;
