@@ -1,6 +1,7 @@
 export const DISCIPLINAS = [
   "Computação e Tecnologia",
   "Língua Portuguesa",
+  "Língua Inglesa",
   "Matemática",
   "Ciências da Natureza",
   "História",
@@ -10,6 +11,7 @@ export const DISCIPLINAS = [
   "Ensino Religioso",
   "Campos de Experiência (Ed. Infantil)",
 ] as const;
+
 
 export const SERIES = [
   { value: "Educação Infantil – 4 e 5 anos", prefix: "EI03" },
