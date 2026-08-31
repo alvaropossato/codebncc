@@ -31,7 +31,7 @@ Gere UMA prática pedagógica transversal, em português do Brasil, para:
 Escolha UMA habilidade entre os códigos válidos desta etapa: ${codigos.join(", ")}.
 A habilidade escolhida deve pertencer ao eixo "${data.eixo}". Escreva a descrição da habilidade conforme a BNCC Computação.
 
-Regras: linguagem clara para professores da rede pública; atividade viável com poucos recursos; sempre inclua uma alternativa desplugada; conecte explicitamente o conteúdo da disciplina com a habilidade de computação; nada de jargão desnecessário.
+Regras: linguagem clara para professores da rede pública; atividade viável com poucos recursos; sempre inclua uma alternativa desplugada; conecte explicitamente o conteúdo da disciplina com a habilidade de computação; nada de jargão desnecessário. Cada item de "etapas" deve ser uma frase curta de texto puro (sem markdown, sem asteriscos, sem numeração), descrevendo um momento da aula; use de 4 a 6 etapas.
 
 Responda SOMENTE com JSON válido no formato:
 {"titulo":"","codigo":"","habilidade":"","resumo":"","objetivo":"","recursos":"","avaliacao":"","etapas":["","","",""],"desplugada":""}`;
