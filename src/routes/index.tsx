@@ -41,10 +41,25 @@ function Index() {
   const [duracao, setDuracao] = useState<string>(DURACOES[1]);
   const [eixo, setEixo] = useState<string>(EIXOS[0]);
   const [competencia, setCompetencia] = useState("");
+  const [tema, setTema] = useState<string>(TEMAS_TRANSVERSAIS[0]);
+  const conteudos = CONTEUDOS_PCN[disciplina] ?? [];
+  const [conteudo, setConteudo] = useState<string>(conteudos[0] ?? "");
+
+  const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
 
   const mutation = useMutation<Pratica>({
     mutationFn: () =>
-      gerar({ data: { disciplina, serie, eixo, duracao, competencia } }),
+      gerar({
+        data: {
+          disciplina,
+          serie,
+          eixo,
+          duracao,
+          conteudo: conteudoAtual,
+          tema,
+          competencia,
+        },
+      }),
   });
 
   const pratica = mutation.data;
