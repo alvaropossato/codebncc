@@ -438,15 +438,70 @@ function Index() {
   );
 }
 
+function AtividadeCard({
+  rotulo,
+  atividade,
+  destaque = false,
+}: {
+  rotulo: string;
+  atividade: Atividade;
+  destaque?: boolean;
+}) {
+  if (!atividade.titulo && atividade.etapas.length === 0) return null;
+  return (
+    <div
+      className={`rounded-2xl border p-4 ${
+        destaque ? "border-aurora/30 bg-aurora/[0.06]" : "border-white/10 bg-ink-soft/50"
+      }`}
+    >
+      <p
+        className={`text-xs font-semibold uppercase tracking-[0.14em] ${
+          destaque ? "text-aurora" : "text-mist/50"
+        }`}
+      >
+        {rotulo}
+      </p>
+      <p className="mt-2 font-display text-base font-bold text-white">{atividade.titulo}</p>
+      {atividade.materiais && (
+        <p className="mt-1 text-xs leading-relaxed text-mist/55">
+          Materiais: {atividade.materiais}
+        </p>
+      )}
+      <ol className="mt-3 space-y-2 text-sm text-mist/75">
+        {atividade.etapas.map((etapa, i) => (
+          <li key={i} className="flex gap-3">
+            <span className="grid size-5 shrink-0 place-items-center rounded-full bg-aurora/15 text-[11px] font-bold text-aurora">
+              {i + 1}
+            </span>
+            {etapa}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function atividadeTexto(rotulo: string, a: Atividade) {
+  return [
+    `${rotulo}: ${a.titulo}`,
+    a.materiais ? `Materiais: ${a.materiais}` : "",
+    a.etapas.map((e, i) => `${i + 1}. ${e}`).join("\n"),
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
 function toTexto(p: Pratica) {
   return [
     p.titulo,
     `Habilidade ${p.codigo}: ${p.habilidade}`,
     `Resumo: ${p.resumo}`,
+    `Conexão PCN × Computação: ${p.conexao}`,
     `Objetivo: ${p.objetivo}`,
     `Recursos: ${p.recursos}`,
     `Etapas:\n${p.etapas.map((e, i) => `${i + 1}. ${e}`).join("\n")}`,
-    `Versão desplugada: ${p.desplugada}`,
+    atividadeTexto("Prática plugada", p.plugada),
+    atividadeTexto("Prática desplugada", p.desplugadaAtividade),
     `Avaliação: ${p.avaliacao}`,
   ].join("\n\n");
 }
