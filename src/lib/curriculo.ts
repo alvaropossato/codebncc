@@ -64,8 +64,9 @@ export const CONTEUDOS_PCN: Record<string, string[]> = {
     "Leitura de imagens e palavras em contextos digitais",
   ],
   Matemática: [
-
+    "Números e operações",
     "Espaço e forma (geometria)",
+
     "Grandezas e medidas",
     "Tratamento da informação (tabelas e gráficos)",
     "Resolução de problemas",
