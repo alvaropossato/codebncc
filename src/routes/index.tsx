@@ -138,7 +138,7 @@ function Index() {
               </h1>
             </div>
             <p className="mt-2 text-sm text-mist/55">
-              Conteúdos dos PCN do 1º ao 9º ano ligados às habilidades da BNCC Computação.
+              Conteúdos das BNCC do 1º ao 9º ano ligados às habilidades da BNCC Computação.
             </p>
 
             <div className="mt-6 space-y-5">
