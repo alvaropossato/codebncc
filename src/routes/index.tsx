@@ -15,6 +15,7 @@ import {
 import { PraticaView } from "@/components/PraticaView";
 import { salvarPratica, type Contexto } from "@/lib/praticas";
 import { useAuth } from "@/hooks/useAuth";
+import codeLogoAsset from "@/assets/code-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -96,9 +97,11 @@ function Index() {
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-5 lg:px-10">
         <header className="no-print flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-aurora to-aurora2 font-display text-lg font-bold text-ink">
-              C
-            </div>
+            <img
+              src={codeLogoAsset.url}
+              alt="CODE"
+              className="size-10 rounded-xl object-contain"
+            />
             <div>
               <p className="font-display text-base font-bold leading-none text-white">CODE</p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-mist/45">
