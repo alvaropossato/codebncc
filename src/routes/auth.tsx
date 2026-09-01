@@ -6,13 +6,13 @@ import { lovable } from "@/integrations/lovable/index";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Entrar — Compêta | Práticas BNCC Computação" },
+      { title: "Entrar — CODE | Práticas BNCC Computação" },
       {
         name: "description",
         content:
-          "Crie sua conta de professor no Compêta para salvar o histórico de práticas pedagógicas alinhadas à BNCC Computação e aos PCN.",
+          "Crie sua conta de professor no CODE para salvar o histórico de práticas pedagógicas alinhadas à BNCC Computação e aos PCN.",
       },
-      { property: "og:title", content: "Entrar no Compêta" },
+      { property: "og:title", content: "Entrar no CODE" },
       {
         property: "og:description",
         content: "Cadastro de professores para salvar e compartilhar práticas alinhadas à BNCC.",
