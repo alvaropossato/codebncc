@@ -272,7 +272,7 @@ function Index() {
                   {mutation.isPending ? "Montando a prática…" : "Nenhuma prática gerada ainda"}
                 </p>
                 <p className="mt-2 max-w-sm text-sm text-mist/55">
-                  Escolha disciplina, conteúdo dos PCN, série e competência ao lado e clique em
+                  Escolha disciplina, conteúdo dos objetos de conhecimento da BNCC, série e competência ao lado e clique em
                   gerar.
                 </p>
               </div>
