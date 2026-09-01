@@ -100,7 +100,7 @@ function Index() {
               C
             </div>
             <div>
-              <p className="font-display text-base font-bold leading-none text-white">Compêta</p>
+              <p className="font-display text-base font-bold leading-none text-white">CODE</p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-mist/45">
                 BNCC · Computação
               </p>
@@ -189,7 +189,7 @@ function Index() {
                 </Campo>
               </div>
 
-              <Campo label="Conteúdo (PCN)" id="conteudo">
+               <Campo label=" OBJETOS DE CONHECIMENTO DA BNCC" id="conteudo">
                 <select
                   id="conteudo"
                   value={conteudoAtual}
@@ -219,7 +219,7 @@ function Index() {
                 </select>
               </Campo>
 
-              <Campo label="Competência BNCC" id="eixo">
+               <Campo label="COMPETÊNCIA BNCC COMPUTAÇÃO" id="eixo">
                 <select
                   id="eixo"
                   value={eixo}
@@ -294,7 +294,7 @@ function Index() {
         </main>
 
         <footer className="no-print mt-6 flex flex-wrap items-center justify-between gap-2 text-[11px] text-mist/35">
-          <span>Compêta · Secretaria Municipal de Educação e Cultura de Potim</span>
+          <span>CODE · Secretaria Municipal de Educação e Cultura de Potim</span>
           <span>PCN (1º ao 9º ano) · BNCC Computação</span>
         </footer>
       </div>
