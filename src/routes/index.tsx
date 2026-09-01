@@ -298,7 +298,7 @@ function Index() {
 
         <footer className="no-print mt-6 flex flex-wrap items-center justify-between gap-2 text-[11px] text-mist/35">
           <span>CODE · Secretaria Municipal de Educação e Cultura de Potim</span>
-          <span>PCN (1º ao 9º ano) · BNCC Computação</span>
+          <span>BNCC  (1º ao 9º ano) · BNCC Computação</span>
         </footer>
       </div>
     </div>
