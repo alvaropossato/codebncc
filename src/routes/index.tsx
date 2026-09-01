@@ -20,13 +20,13 @@ import codeLogoAsset from "@/assets/code-logo.png.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Compêta — Práticas de Computação alinhadas à BNCC" },
+      { title: "CODE — Práticas de Computação alinhadas à BNCC" },
       {
         name: "description",
         content:
           "Escolha disciplina, conteúdo dos PCN (1º ao 9º ano), série e competência e receba uma prática plugada e desplugada alinhada à BNCC Computação.",
       },
-      { property: "og:title", content: "Compêta — Práticas de Computação alinhadas à BNCC" },
+      { property: "og:title", content: "CODE — Práticas de Computação alinhadas à BNCC" },
       {
         property: "og:description",
         content:
