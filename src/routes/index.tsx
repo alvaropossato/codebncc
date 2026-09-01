@@ -103,7 +103,9 @@ function Index() {
               className="size-20 rounded-xl object-contain"
             />
             <div>
-              <p className="font-display text-base font-bold leading-none text-white">CODE</p>
+              <p className="font-display text-base font-bold leading-none text-white">
+                
+              </p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-mist/45">
                 BNCC · Computação
               </p>
