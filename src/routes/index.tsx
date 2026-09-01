@@ -100,7 +100,7 @@ function Index() {
             <img
               src={codeLogoAsset.url}
               alt="CODE"
-              className="size-10 rounded-xl object-contain"
+              className="size-20 rounded-xl object-contain"
             />
             <div>
               <p className="font-display text-base font-bold leading-none text-white">CODE</p>
