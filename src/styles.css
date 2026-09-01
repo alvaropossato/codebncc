@@ -223,3 +223,8 @@
     backdrop-filter: none !important;
   }
 }
+
+/* Hide Lovable badge on published deployments */
+#lovable-badge {
+  display: none !important;
+}
