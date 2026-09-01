@@ -7,13 +7,13 @@ import { excluirPratica, listarMinhasPraticas } from "@/lib/praticas";
 export const Route = createFileRoute("/historico")({
   head: () => ({
     meta: [
-      { title: "Meu histórico de práticas — Compêta" },
+      { title: "Meu histórico de práticas — CODE" },
       {
         name: "description",
         content:
-          "Consulte, compartilhe e imprima as práticas de BNCC Computação que você já gerou no Compêta.",
+          "Consulte, compartilhe e imprima as práticas de BNCC Computação que você já gerou no CODE.",
       },
-      { property: "og:title", content: "Meu histórico de práticas — Compêta" },
+      { property: "og:title", content: "Meu histórico de práticas — CODE" },
       {
         property: "og:description",
         content: "Histórico salvo das práticas pedagógicas geradas pelo professor.",
@@ -40,7 +40,7 @@ function Historico() {
       <div className="relative mx-auto max-w-4xl px-6 py-8">
         <div className="mb-6 flex items-center justify-between">
           <Link to="/" className="font-display text-base font-bold text-white">
-            Compêta
+            CODE
           </Link>
           <div className="flex items-center gap-2">
             <Link

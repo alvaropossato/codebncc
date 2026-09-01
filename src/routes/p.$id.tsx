@@ -6,13 +6,13 @@ import { PraticaView } from "@/components/PraticaView";
 export const Route = createFileRoute("/p/$id")({
   head: () => ({
     meta: [
-      { title: "Prática compartilhada — Compêta" },
+      { title: "Prática compartilhada — CODE" },
       {
         name: "description",
         content:
-          "Prática pedagógica alinhada aos PCN e à BNCC Computação, com versão plugada e desplugada, compartilhada pelo Compêta.",
+          "Prática pedagógica alinhada aos PCN e à BNCC Computação, com versão plugada e desplugada, compartilhada pelo CODE.",
       },
-      { property: "og:title", content: "Prática pedagógica — Compêta" },
+      { property: "og:title", content: "Prática pedagógica — CODE" },
       {
         property: "og:description",
         content: "Plano de aula com conexão PCN × BNCC Computação, plugado e desplugado.",
@@ -45,7 +45,7 @@ function Compartilhada() {
       <div className="relative mx-auto max-w-4xl px-6 py-8">
         <div className="no-print mb-5 flex items-center justify-between">
           <Link to="/" className="font-display text-base font-bold text-white">
-            Compêta
+            CODE
           </Link>
           <Link
             to="/"
