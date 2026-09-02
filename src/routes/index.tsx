@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { gerarPratica } from "@/lib/pratica.functions";
@@ -12,6 +12,13 @@ import {
   TEMAS_TRANSVERSAIS,
   type Pratica,
 } from "@/lib/curriculo";
+import {
+  carregarBncc,
+  filtrar,
+  unidadesTematicas,
+  objetosDeConhecimento,
+  habilidades as habilidadesDe,
+} from "@/lib/bncc";
 import { PraticaView } from "@/components/PraticaView";
 import { salvarPratica, type Contexto } from "@/lib/praticas";
 import { useAuth } from "@/hooks/useAuth";
@@ -49,11 +56,28 @@ function Index() {
   const [competencia, setCompetencia] = useState("");
   const [tema, setTema] = useState<string>(TEMAS_TRANSVERSAIS[0]);
   const [conteudo, setConteudo] = useState<string>("");
+  const [unidade, setUnidade] = useState<string>("");
+  const [objeto, setObjeto] = useState<string>("");
+  const [habilidade, setHabilidade] = useState<string>("");
   const [link, setLink] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
 
   const conteudos = conteudosPara(disciplina, serie);
   const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
+
+  const { data: baseBncc = [] } = useQuery({
+    queryKey: ["bncc-ef"],
+    queryFn: carregarBncc,
+    staleTime: Infinity,
+  });
+
+  const itensBncc = filtrar(baseBncc, disciplina, serie);
+  const unidades = unidadesTematicas(itensBncc);
+  const unidadeAtual = unidades.includes(unidade) ? unidade : (unidades[0] ?? "");
+  const objetos = objetosDeConhecimento(itensBncc, unidadeAtual);
+  const objetoAtual = objetos.includes(objeto) ? objeto : (objetos[0] ?? "");
+  const habs = habilidadesDe(itensBncc, unidadeAtual, objetoAtual);
+  const habAtual = habs.find((h) => h.c === habilidade) ?? habs[0];
 
   const ctx: Contexto = {
     disciplina,
@@ -65,7 +89,17 @@ function Index() {
   };
 
   const mutation = useMutation<Pratica>({
-    mutationFn: () => gerar({ data: { ...ctx, competencia } }),
+    mutationFn: () =>
+      gerar({
+        data: {
+          ...ctx,
+          competencia,
+          unidadeTematica: unidadeAtual,
+          objetoConhecimento: objetoAtual,
+          habilidadeCodigo: habAtual?.c ?? "",
+          habilidadeTexto: habAtual?.t ?? "",
+        },
+      }),
     onSuccess: () => setLink(null),
   });
 
@@ -209,6 +243,69 @@ COMPUTAÇÃO
                   ))}
                 </select>
               </Campo>
+
+              {unidades.length > 0 && (
+                <>
+                  <Campo label="Unidade temática (BNCC)" id="unidade">
+                    <select
+                      id="unidade"
+                      value={unidadeAtual}
+                      onChange={(e) => {
+                        setUnidade(e.target.value);
+                        setObjeto("");
+                        setHabilidade("");
+                      }}
+                      className="field field-focus pr-10"
+                    >
+                      {unidades.map((u) => (
+                        <option key={u} value={u} className="bg-ink-soft">
+                          {u}
+                        </option>
+                      ))}
+                    </select>
+                  </Campo>
+
+                  <Campo label="Objeto de conhecimento (BNCC)" id="objeto">
+                    <select
+                      id="objeto"
+                      value={objetoAtual}
+                      onChange={(e) => {
+                        setObjeto(e.target.value);
+                        setHabilidade("");
+                      }}
+                      className="field field-focus pr-10"
+                    >
+                      {objetos.map((o) => (
+                        <option key={o} value={o} className="bg-ink-soft">
+                          {o}
+                        </option>
+                      ))}
+                    </select>
+                  </Campo>
+
+                  <Campo label="Habilidade (BNCC)" id="habilidade">
+                    <select
+                      id="habilidade"
+                      value={habAtual?.c ?? ""}
+                      onChange={(e) => setHabilidade(e.target.value)}
+                      className="field field-focus pr-10"
+                    >
+                      {habs.map((h) => (
+                        <option key={h.c} value={h.c} className="bg-ink-soft">
+                          {h.c} — {h.t.slice(0, 90)}
+                          {h.t.length > 90 ? "…" : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </Campo>
+                  {habAtual && (
+                    <p className="-mt-2 rounded-xl bg-white/5 px-3 py-2 text-xs leading-relaxed text-mist/60">
+                      <span className="font-semibold text-aurora">{habAtual.c}</span> {habAtual.t}
+                    </p>
+                  )}
+                </>
+              )}
+
 
               <Campo label="Tema transversal" id="tema">
                 <select
