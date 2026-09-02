@@ -244,6 +244,69 @@ COMPUTAÇÃO
                 </select>
               </Campo>
 
+              {unidades.length > 0 && (
+                <>
+                  <Campo label="Unidade temática (BNCC)" id="unidade">
+                    <select
+                      id="unidade"
+                      value={unidadeAtual}
+                      onChange={(e) => {
+                        setUnidade(e.target.value);
+                        setObjeto("");
+                        setHabilidade("");
+                      }}
+                      className="field field-focus pr-10"
+                    >
+                      {unidades.map((u) => (
+                        <option key={u} value={u} className="bg-ink-soft">
+                          {u}
+                        </option>
+                      ))}
+                    </select>
+                  </Campo>
+
+                  <Campo label="Objeto de conhecimento (BNCC)" id="objeto">
+                    <select
+                      id="objeto"
+                      value={objetoAtual}
+                      onChange={(e) => {
+                        setObjeto(e.target.value);
+                        setHabilidade("");
+                      }}
+                      className="field field-focus pr-10"
+                    >
+                      {objetos.map((o) => (
+                        <option key={o} value={o} className="bg-ink-soft">
+                          {o}
+                        </option>
+                      ))}
+                    </select>
+                  </Campo>
+
+                  <Campo label="Habilidade (BNCC)" id="habilidade">
+                    <select
+                      id="habilidade"
+                      value={habAtual?.c ?? ""}
+                      onChange={(e) => setHabilidade(e.target.value)}
+                      className="field field-focus pr-10"
+                    >
+                      {habs.map((h) => (
+                        <option key={h.c} value={h.c} className="bg-ink-soft">
+                          {h.c} — {h.t.slice(0, 90)}
+                          {h.t.length > 90 ? "…" : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </Campo>
+                  {habAtual && (
+                    <p className="-mt-2 rounded-xl bg-white/5 px-3 py-2 text-xs leading-relaxed text-mist/60">
+                      <span className="font-semibold text-aurora">{habAtual.c}</span> {habAtual.t}
+                    </p>
+                  )}
+                </>
+              )}
+
+
               <Campo label="Tema transversal" id="tema">
                 <select
                   id="tema"
