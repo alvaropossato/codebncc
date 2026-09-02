@@ -12,6 +12,13 @@ import {
   TEMAS_TRANSVERSAIS,
   type Pratica,
 } from "@/lib/curriculo";
+import {
+  carregarBncc,
+  filtrar,
+  unidadesTematicas,
+  objetosDeConhecimento,
+  habilidades as habilidadesDe,
+} from "@/lib/bncc";
 import { PraticaView } from "@/components/PraticaView";
 import { salvarPratica, type Contexto } from "@/lib/praticas";
 import { useAuth } from "@/hooks/useAuth";
