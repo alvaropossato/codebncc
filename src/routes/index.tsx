@@ -82,7 +82,7 @@ function Index() {
   const ctx: Contexto = {
     disciplina,
     serie,
-    conteudo: conteudoAtual,
+    conteudo: objetoAtual || conteudoAtual,
     tema,
     eixo,
     duracao,
@@ -228,21 +228,6 @@ COMPUTAÇÃO
                   </select>
                 </Campo>
               </div>
-
-               <Campo label=" OBJETOS DE CONHECIMENTO DA BNCC" id="conteudo">
-                <select
-                  id="conteudo"
-                  value={conteudoAtual}
-                  onChange={(e) => setConteudo(e.target.value)}
-                  className="field field-focus pr-10"
-                >
-                  {conteudos.map((c) => (
-                    <option key={c} value={c} className="bg-ink-soft">
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </Campo>
 
               {unidades.length > 0 && (
                 <>
