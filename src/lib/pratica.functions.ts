@@ -51,9 +51,9 @@ Gere UMA prática pedagógica transversal, em português do Brasil, para:
 - Observações do professor: ${data.competencia || "nenhuma"}
 
 Escolha UMA habilidade entre os códigos válidos desta etapa: ${codigos.join(", ")}.
-A habilidade escolhida deve pertencer ao eixo "${data.eixo}" e dialogar diretamente com o conteúdo dos PCN indicado. Escreva a descrição da habilidade conforme a BNCC Computação.
+A habilidade escolhida deve pertencer ao eixo "${data.eixo}" e dialogar diretamente com a unidade temática, o objeto de conhecimento e a habilidade da BNCC do componente indicados. Escreva a descrição da habilidade conforme a BNCC Computação.
 
-Em "conexao", explique em 2 a 3 frases como o conteúdo dos PCN se liga à habilidade de computação escolhida.
+Em "conexao", explique em 2 a 3 frases como a habilidade da BNCC do componente (unidade temática e objeto de conhecimento) se liga à habilidade de computação escolhida, citando os dois códigos.
 Em "plugada", proponha a atividade COM tecnologia digital (computador, tablet, celular, robô ou apps gratuitos), viável na rede pública.
 Em "desplugadaAtividade", proponha a MESMA aprendizagem SEM nenhum dispositivo (papel, corpo, cartões, giz, jogos).
 Em "desplugada", resuma em uma frase a versão desplugada.
