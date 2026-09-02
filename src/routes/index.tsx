@@ -82,7 +82,7 @@ function Index() {
   const ctx: Contexto = {
     disciplina,
     serie,
-    conteudo: conteudoAtual,
+    conteudo: objetoAtual || conteudoAtual,
     tema,
     eixo,
     duracao,
