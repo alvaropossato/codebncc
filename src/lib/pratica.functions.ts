@@ -10,6 +10,10 @@ const schema = z.object({
   conteudo: z.string().min(1),
   tema: z.string().max(120).optional().default("Nenhum"),
   competencia: z.string().max(600).optional().default(""),
+  unidadeTematica: z.string().max(200).optional().default(""),
+  objetoConhecimento: z.string().max(300).optional().default(""),
+  habilidadeCodigo: z.string().max(20).optional().default(""),
+  habilidadeTexto: z.string().max(1200).optional().default(""),
 });
 
 function normAtividade(a: unknown): Atividade {
