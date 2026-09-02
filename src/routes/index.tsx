@@ -107,7 +107,8 @@ function Index() {
                 
               </p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-mist/45">
-                BNCC · Computação
+                BNCC  
+COMPUTAÇÃO
               </p>
             </div>
           </div>
@@ -299,7 +300,7 @@ function Index() {
         </main>
 
         <footer className="no-print mt-6 flex flex-wrap items-center justify-between gap-2 text-[11px] text-mist/35">
-          <span>CODE · Secretaria Municipal de Educação e Cultura de Potim</span>
+          <span>Desenvolvido por Alvaro Possato · Secretaria Municipal de Educação e Cultura de Potim</span>
           <span>BNCC  (1º ao 9º ano) · BNCC Computação</span>
         </footer>
       </div>
