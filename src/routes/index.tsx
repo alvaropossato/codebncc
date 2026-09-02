@@ -56,11 +56,28 @@ function Index() {
   const [competencia, setCompetencia] = useState("");
   const [tema, setTema] = useState<string>(TEMAS_TRANSVERSAIS[0]);
   const [conteudo, setConteudo] = useState<string>("");
+  const [unidade, setUnidade] = useState<string>("");
+  const [objeto, setObjeto] = useState<string>("");
+  const [habilidade, setHabilidade] = useState<string>("");
   const [link, setLink] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
 
   const conteudos = conteudosPara(disciplina, serie);
   const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
+
+  const { data: baseBncc = [] } = useQuery({
+    queryKey: ["bncc-ef"],
+    queryFn: carregarBncc,
+    staleTime: Infinity,
+  });
+
+  const itensBncc = filtrar(baseBncc, disciplina, serie);
+  const unidades = unidadesTematicas(itensBncc);
+  const unidadeAtual = unidades.includes(unidade) ? unidade : (unidades[0] ?? "");
+  const objetos = objetosDeConhecimento(itensBncc, unidadeAtual);
+  const objetoAtual = objetos.includes(objeto) ? objeto : (objetos[0] ?? "");
+  const habs = habilidadesDe(itensBncc, unidadeAtual, objetoAtual);
+  const habAtual = habs.find((h) => h.c === habilidade) ?? habs[0];
 
   const ctx: Contexto = {
     disciplina,
@@ -72,7 +89,17 @@ function Index() {
   };
 
   const mutation = useMutation<Pratica>({
-    mutationFn: () => gerar({ data: { ...ctx, competencia } }),
+    mutationFn: () =>
+      gerar({
+        data: {
+          ...ctx,
+          competencia,
+          unidadeTematica: unidadeAtual,
+          objetoConhecimento: objetoAtual,
+          habilidadeCodigo: habAtual?.c ?? "",
+          habilidadeTexto: habAtual?.t ?? "",
+        },
+      }),
     onSuccess: () => setLink(null),
   });
 
