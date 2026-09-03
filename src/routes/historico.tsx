@@ -102,8 +102,25 @@ function Historico() {
               <div>
                 <p className="font-display text-base font-bold text-white">{p.titulo}</p>
                 <p className="mt-1 text-xs text-mist/50">
-                  {p.serie} · {p.disciplina} · {p.conteudo} · {p.eixo}
+                  {p.serie} · {p.disciplina} · {p.eixo}
                 </p>
+                {p.unidade_tematica && (
+                  <p className="mt-1 text-xs text-mist/50">
+                    <span className="text-mist/35">Unidade temática:</span> {p.unidade_tematica}
+                  </p>
+                )}
+                {(p.objeto_conhecimento || p.conteudo) && (
+                  <p className="mt-1 text-xs text-mist/50">
+                    <span className="text-mist/35">Objeto de conhecimento:</span>{" "}
+                    {p.objeto_conhecimento || p.conteudo}
+                  </p>
+                )}
+                {p.habilidade_codigo && (
+                  <p className="mt-1 max-w-xl text-xs text-mist/50">
+                    <span className="font-semibold text-aurora">{p.habilidade_codigo}</span>{" "}
+                    {p.habilidade_texto}
+                  </p>
+                )}
                 <p className="mt-1 text-[11px] text-mist/35">
                   {new Date(p.created_at).toLocaleDateString("pt-BR")}
                 </p>
