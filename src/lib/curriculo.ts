@@ -249,4 +249,20 @@ export type Pratica = {
   plugada: Atividade;
   desplugadaAtividade: Atividade;
   desplugada: string;
+  adaptacoesPcd?: AdaptacaoPcd[];
 };
+
+export type AdaptacaoPcd = {
+  publico: string;
+  sugestoes: string[];
+  recursos: string;
+};
+
+export const PUBLICOS_PCD = [
+  "Deficiência visual (cegueira e baixa visão)",
+  "Deficiência auditiva e surdez",
+  "Deficiência intelectual",
+  "Deficiência física/motora",
+  "Transtorno do Espectro Autista (TEA)",
+  "Altas habilidades/superdotação",
+] as const;

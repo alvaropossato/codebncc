@@ -1,6 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { CODIGOS, SERIES, type Atividade, type Pratica } from "./curriculo";
+import {
+  CODIGOS,
+  PUBLICOS_PCD,
+  SERIES,
+  type AdaptacaoPcd,
+  type Atividade,
+  type Pratica,
+} from "./curriculo";
 
 const schema = z.object({
   disciplina: z.string().min(1),
@@ -57,11 +64,12 @@ Em "conexao", explique em 2 a 3 frases como a habilidade da BNCC do componente (
 Em "plugada", proponha a atividade COM tecnologia digital (computador, tablet, celular, robô ou apps gratuitos), viável na rede pública.
 Em "desplugadaAtividade", proponha a MESMA aprendizagem SEM nenhum dispositivo (papel, corpo, cartões, giz, jogos).
 Em "desplugada", resuma em uma frase a versão desplugada.
+Em "adaptacoesPcd", proponha adaptações inclusivas da MESMA prática para estudantes público-alvo da Educação Especial (PCD), na perspectiva da educação inclusiva (LBI 13.146/2015 e Política Nacional de Educação Especial Inclusiva). Gere um item para CADA um destes públicos, nesta ordem: ${PUBLICOS_PCD.join("; ")}. Em cada item: "publico" com o nome do público, "sugestoes" com 3 a 4 adaptações concretas de como realizar as atividades plugada e desplugada (ajustes de material, comunicação, tempo, avaliação e mediação, incluindo tecnologia assistiva gratuita quando fizer sentido) e "recursos" com os recursos/apoios necessários em uma frase.
 
 Regras: linguagem clara para professores da rede pública; poucos recursos; nenhuma etapa em markdown (texto puro, sem asteriscos e sem numeração); 4 a 6 etapas em cada atividade; "etapas" geral deve trazer a sequência didática da aula inteira (4 a 6 frases).
 
 Responda SOMENTE com JSON válido no formato:
-{"titulo":"","codigo":"","habilidade":"","resumo":"","conexao":"","objetivo":"","recursos":"","avaliacao":"","etapas":["","","",""],"plugada":{"titulo":"","materiais":"","etapas":["","","",""]},"desplugadaAtividade":{"titulo":"","materiais":"","etapas":["","","",""]},"desplugada":""}`;
+{"titulo":"","codigo":"","habilidade":"","resumo":"","conexao":"","objetivo":"","recursos":"","avaliacao":"","etapas":["","","",""],"plugada":{"titulo":"","materiais":"","etapas":["","","",""]},"desplugadaAtividade":{"titulo":"","materiais":"","etapas":["","","",""]},"desplugada":"","adaptacoesPcd":[{"publico":"","sugestoes":["","",""],"recursos":""}]}`;
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -96,5 +104,15 @@ Responda SOMENTE com JSON válido no formato:
       plugada: normAtividade(parsed.plugada),
       desplugadaAtividade: normAtividade(parsed.desplugadaAtividade),
       desplugada: parsed.desplugada ?? "",
+      adaptacoesPcd: Array.isArray(parsed.adaptacoesPcd)
+        ? parsed.adaptacoesPcd.map((a): AdaptacaoPcd => {
+            const o = (a ?? {}) as Partial<AdaptacaoPcd>;
+            return {
+              publico: o.publico ?? "",
+              sugestoes: Array.isArray(o.sugestoes) ? o.sugestoes : [],
+              recursos: o.recursos ?? "",
+            };
+          })
+        : [],
     };
   });
