@@ -43,10 +43,14 @@ export type Database = {
           disciplina: string
           duracao: string
           eixo: string
+          habilidade_codigo: string | null
+          habilidade_texto: string | null
           id: string
+          objeto_conhecimento: string | null
           serie: string
           tema: string
           titulo: string
+          unidade_tematica: string | null
           user_id: string | null
         }
         Insert: {
@@ -56,10 +60,14 @@ export type Database = {
           disciplina?: string
           duracao?: string
           eixo?: string
+          habilidade_codigo?: string | null
+          habilidade_texto?: string | null
           id?: string
+          objeto_conhecimento?: string | null
           serie?: string
           tema?: string
           titulo?: string
+          unidade_tematica?: string | null
           user_id?: string | null
         }
         Update: {
@@ -69,10 +77,14 @@ export type Database = {
           disciplina?: string
           duracao?: string
           eixo?: string
+          habilidade_codigo?: string | null
+          habilidade_texto?: string | null
           id?: string
+          objeto_conhecimento?: string | null
           serie?: string
           tema?: string
           titulo?: string
+          unidade_tematica?: string | null
           user_id?: string | null
         }
         Relationships: []
