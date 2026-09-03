@@ -60,6 +60,7 @@ function Index() {
   const [objeto, setObjeto] = useState<string>("");
   const [habilidade, setHabilidade] = useState<string>("");
   const [link, setLink] = useState<string | null>(null);
+  const [salvaId, setSalvaId] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
 
   const conteudos = conteudosPara(disciplina, serie);
@@ -86,13 +87,22 @@ function Index() {
     tema,
     eixo,
     duracao,
+    unidade_tematica: unidadeAtual,
+    objeto_conhecimento: objetoAtual,
+    habilidade_codigo: habAtual?.c ?? "",
+    habilidade_texto: habAtual?.t ?? "",
   };
 
   const mutation = useMutation<Pratica>({
     mutationFn: () =>
       gerar({
         data: {
-          ...ctx,
+          disciplina,
+          serie,
+          conteudo: objetoAtual || conteudoAtual,
+          tema,
+          eixo,
+          duracao,
           competencia,
           unidadeTematica: unidadeAtual,
           objetoConhecimento: objetoAtual,
@@ -100,12 +110,22 @@ function Index() {
           habilidadeTexto: habAtual?.t ?? "",
         },
       }),
-    onSuccess: () => setLink(null),
+    onSuccess: async (p) => {
+      setLink(null);
+      setSalvaId(null);
+      try {
+        const id = await salvarPratica(p, ctx, user?.id ?? null);
+        setSalvaId(id);
+      } catch {
+        /* sem conexão: prática segue disponível na tela */
+      }
+    },
   });
 
   const compartilhar = useMutation({
     mutationFn: async () => {
-      const id = await salvarPratica(mutation.data!, ctx, user?.id ?? null);
+      const id = salvaId ?? (await salvarPratica(mutation.data!, ctx, user?.id ?? null));
+      setSalvaId(id);
       return `${window.location.origin}/p/${id}`;
     },
     onSuccess: async (url) => {

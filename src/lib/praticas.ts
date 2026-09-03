@@ -8,6 +8,10 @@ export type Contexto = {
   tema: string;
   eixo: string;
   duracao: string;
+  unidade_tematica?: string;
+  objeto_conhecimento?: string;
+  habilidade_codigo?: string;
+  habilidade_texto?: string;
 };
 
 export type PraticaSalva = Contexto & {
