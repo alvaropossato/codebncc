@@ -60,6 +60,7 @@ function Index() {
   const [objeto, setObjeto] = useState<string>("");
   const [habilidade, setHabilidade] = useState<string>("");
   const [link, setLink] = useState<string | null>(null);
+  const [salvaId, setSalvaId] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
 
   const conteudos = conteudosPara(disciplina, serie);
