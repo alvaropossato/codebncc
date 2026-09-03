@@ -23,6 +23,16 @@ export function toTexto(p: Pratica) {
     `Etapas:\n${p.etapas.map((e, i) => `${i + 1}. ${e}`).join("\n")}`,
     atividadeTexto("Prática plugada", p.plugada),
     atividadeTexto("Prática desplugada", p.desplugadaAtividade),
+    (p.adaptacoesPcd ?? []).length
+      ? `Adaptações para estudantes PCD:\n${(p.adaptacoesPcd ?? [])
+          .map(
+            (a) =>
+              `${a.publico}\n${a.sugestoes.map((s) => `- ${s}`).join("\n")}${
+                a.recursos ? `\nRecursos: ${a.recursos}` : ""
+              }`,
+          )
+          .join("\n\n")}`
+      : "",
     `Avaliação: ${p.avaliacao}`,
   ].join("\n\n");
 }
@@ -211,6 +221,35 @@ export function PraticaView({
         <AtividadeCard rotulo="Prática plugada" atividade={pratica.plugada} destaque />
         <AtividadeCard rotulo="Prática desplugada" atividade={pratica.desplugadaAtividade} />
       </div>
+
+      {(pratica.adaptacoesPcd ?? []).length > 0 && (
+        <div className="mt-3 rounded-2xl border border-aurora2/30 bg-aurora2/[0.06] p-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-aurora2">
+            Atividades adaptadas — estudantes PCD
+          </p>
+          <p className="mt-1 text-xs text-mist/50">
+            Sugestões de acessibilidade e tecnologia assistiva para a mesma aprendizagem.
+          </p>
+          <div className="mt-3 grid gap-3 lg:grid-cols-2">
+            {(pratica.adaptacoesPcd ?? []).map((a, i) => (
+              <div key={i} className="rounded-xl border border-white/10 bg-ink-soft/50 p-3">
+                <p className="font-display text-sm font-bold text-white">{a.publico}</p>
+                <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-mist/70">
+                  {a.sugestoes.map((s, j) => (
+                    <li key={j} className="flex gap-2">
+                      <span className="mt-1.5 size-1 shrink-0 rounded-full bg-aurora2" />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+                {a.recursos && (
+                  <p className="mt-2 text-[11px] text-mist/50">Recursos: {a.recursos}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="mt-3 rounded-2xl border border-white/10 bg-ink-soft/50 p-4">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50">
