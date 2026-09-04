@@ -21,7 +21,9 @@ const schema = z.object({
   objetoConhecimento: z.string().max(300).optional().default(""),
   habilidadeCodigo: z.string().max(20).optional().default(""),
   habilidadeTexto: z.string().max(1200).optional().default(""),
+  fonteCurricular: z.string().max(60).optional().default("BNCC"),
   publicosPcd: z.array(z.string().max(120)).optional().default([]),
+
 });
 
 function normAtividade(a: unknown): Atividade {
