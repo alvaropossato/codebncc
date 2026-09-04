@@ -7,10 +7,12 @@ import {
   DISCIPLINAS,
   SERIES,
   EIXOS,
+  RESUMOS_EIXOS,
   DURACOES,
   conteudosPara,
   TEMAS_TRANSVERSAIS,
   PUBLICOS_PCD,
+  type Eixo,
   type Pratica,
 } from "@/lib/curriculo";
 import {
@@ -56,7 +58,7 @@ function Index() {
   const [disciplina, setDisciplina] = useState<string>("Língua Portuguesa");
   const [serie, setSerie] = useState<string>("2º ano");
   const [duracao, setDuracao] = useState<string>(DURACOES[1]);
-  const [eixo, setEixo] = useState<string>(EIXOS[0]);
+  const [eixo, setEixo] = useState<Eixo>(EIXOS[0]);
   const [competencia, setCompetencia] = useState("");
   const [tema, setTema] = useState<string>(TEMAS_TRANSVERSAIS[0]);
   const [conteudo, setConteudo] = useState<string>("");
@@ -396,7 +398,7 @@ COMPUTAÇÃO
                 <select
                   id="eixo"
                   value={eixo}
-                  onChange={(e) => setEixo(e.target.value)}
+                  onChange={(e) => setEixo(e.target.value as Eixo)}
                   className="field field-focus pr-10"
                 >
                   {EIXOS.map((e) => (
@@ -406,6 +408,10 @@ COMPUTAÇÃO
                   ))}
                 </select>
               </Campo>
+              <p className="-mt-2 rounded-xl border border-aurora/20 bg-aurora/[0.07] px-3 py-2.5 text-xs leading-relaxed text-mist/70">
+                <span className="font-semibold text-aurora">Resumo:</span>{" "}
+                {RESUMOS_EIXOS[eixo]}
+              </p>
               <textarea
                 rows={3}
                 value={competencia}
