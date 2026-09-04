@@ -41,6 +41,10 @@ export const gerarPratica = createServerFn({ method: "POST" })
 
     const prefix = SERIES.find((s) => s.value === data.serie)?.prefix ?? "EF02";
     const codigos = CODIGOS[prefix] ?? [];
+    const publicos =
+      data.publicosPcd && data.publicosPcd.length > 0
+        ? data.publicosPcd
+        : [...PUBLICOS_PCD];
 
     const prompt = `Você é formador do Currículo de Computação (Educação Digital e Midiática) da Rede Municipal de Potim/SP, alinhado à BNCC Computação (Complemento à BNCC), à Resolução CNE nº 1/2022 e aos Parâmetros Curriculares Nacionais (PCN) do Ensino Fundamental — 1º ao 5º ano (primeiro e segundo ciclos) e 6º ao 9º ano (terceiro e quarto ciclos).
 
