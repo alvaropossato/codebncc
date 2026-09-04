@@ -43,19 +43,19 @@ function Compartilhada() {
   return (
     <div className="relative min-h-screen bg-ink font-sans text-mist">
       <div className="pointer-events-none absolute inset-0 aurora-glow" />
-      <div className="relative mx-auto max-w-4xl px-6 py-8">
-        <div className="no-print mb-5 flex items-center justify-between">
+      <div className="relative mx-auto max-w-4xl px-4 py-5 sm:px-6 sm:py-8">
+        <div className="no-print mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <Link to="/" aria-label="CODE — início">
             <img src={codeLogoAsset.url} alt="CODE" className="size-16 object-contain" />
           </Link>
           <Link
             to="/"
-            className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/70 hover:border-aurora/40"
+            className="flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-3 py-2 text-center text-xs leading-tight text-mist/70 hover:border-aurora/40"
           >
             Gerar minha prática
           </Link>
         </div>
-        <section className="panel rounded-3xl p-6">
+        <section className="panel min-w-0 rounded-2xl p-4 sm:rounded-3xl sm:p-6">
           {isPending && <p className="text-sm text-mist/60">Carregando prática…</p>}
           {(isError || (!isPending && !data)) && (
             <p className="text-sm text-aurora3">Prática não encontrada.</p>

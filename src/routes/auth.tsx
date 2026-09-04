@@ -82,11 +82,11 @@ function AuthPage() {
   return (
     <div className="relative min-h-screen bg-ink font-sans text-mist">
       <div className="pointer-events-none absolute inset-0 aurora-glow" />
-      <div className="relative mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-10">
+      <div className="relative mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-8 sm:px-6 sm:py-10">
         <Link to="/" className="mb-6 text-xs text-mist/50 hover:text-aurora">
           ← Voltar ao gerador
         </Link>
-        <div className="panel rounded-3xl p-6">
+        <div className="panel rounded-2xl p-4 sm:rounded-3xl sm:p-6">
           <h1 className="font-display text-2xl font-bold text-white">
             {modo === "entrar" ? "Entrar" : "Criar conta de professor"}
           </h1>

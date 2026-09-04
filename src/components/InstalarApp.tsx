@@ -23,7 +23,7 @@ export function InstalarApp() {
         await evento.prompt();
         setEvento(null);
       }}
-      className="no-print fixed bottom-4 right-4 z-50 rounded-xl bg-gradient-to-r from-aurora via-aurora2 to-aurora3 px-4 py-2.5 font-display text-xs font-bold text-ink shadow-lg"
+      className="no-print fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 right-4 z-50 min-h-11 rounded-xl bg-gradient-to-r from-aurora via-aurora2 to-aurora3 px-4 py-2.5 font-display text-xs font-bold text-ink shadow-lg sm:left-auto"
     >
       Instalar app CODE
     </button>
