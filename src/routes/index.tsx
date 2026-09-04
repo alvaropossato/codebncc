@@ -176,6 +176,12 @@ COMPUTAÇÃO
           </div>
           <div className="flex items-center gap-2">
             <Link
+              to="/adaptacoes"
+              className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/75 hover:border-aurora/40"
+            >
+              Adaptações PCD
+            </Link>
+            <Link
               to="/historico"
               className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/75 hover:border-aurora/40"
             >

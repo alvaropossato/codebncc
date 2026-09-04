@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdaptacoesRouteImport } from './routes/adaptacoes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as HistoricoRouteImport } from './routes/historico'
 import { Route as PIdRouteImport } from './routes/p.$id'
@@ -17,6 +18,11 @@ import { Route as PIdRouteImport } from './routes/p.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdaptacoesRoute = AdaptacoesRouteImport.update({
+  id: '/adaptacoes',
+  path: '/adaptacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -37,12 +43,14 @@ const PIdRoute = PIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/adaptacoes': typeof AdaptacoesRoute
   '/auth': typeof AuthRoute
   '/historico': typeof HistoricoRoute
   '/p/$id': typeof PIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/adaptacoes': typeof AdaptacoesRoute
   '/auth': typeof AuthRoute
   '/historico': typeof HistoricoRoute
   '/p/$id': typeof PIdRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/adaptacoes': typeof AdaptacoesRoute
   '/auth': typeof AuthRoute
   '/historico': typeof HistoricoRoute
   '/p/$id': typeof PIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/historico' | '/p/$id'
+  fullPaths: '/' | '/adaptacoes' | '/auth' | '/historico' | '/p/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/historico' | '/p/$id'
-  id: '__root__' | '/' | '/auth' | '/historico' | '/p/$id'
+  to: '/' | '/adaptacoes' | '/auth' | '/historico' | '/p/$id'
+  id: '__root__' | '/' | '/adaptacoes' | '/auth' | '/historico' | '/p/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdaptacoesRoute: typeof AdaptacoesRoute
   AuthRoute: typeof AuthRoute
   HistoricoRoute: typeof HistoricoRoute
   PIdRoute: typeof PIdRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/adaptacoes': {
+      id: '/adaptacoes'
+      path: '/adaptacoes'
+      fullPath: '/adaptacoes'
+      preLoaderRoute: typeof AdaptacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdaptacoesRoute: AdaptacoesRoute,
   AuthRoute: AuthRoute,
   HistoricoRoute: HistoricoRoute,
   PIdRoute: PIdRoute,
