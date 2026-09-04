@@ -21,6 +21,7 @@ const schema = z.object({
   objetoConhecimento: z.string().max(300).optional().default(""),
   habilidadeCodigo: z.string().max(20).optional().default(""),
   habilidadeTexto: z.string().max(1200).optional().default(""),
+  publicosPcd: z.array(z.string().max(120)).optional().default([]),
 });
 
 function normAtividade(a: unknown): Atividade {
@@ -40,6 +41,10 @@ export const gerarPratica = createServerFn({ method: "POST" })
 
     const prefix = SERIES.find((s) => s.value === data.serie)?.prefix ?? "EF02";
     const codigos = CODIGOS[prefix] ?? [];
+    const publicos =
+      data.publicosPcd && data.publicosPcd.length > 0
+        ? data.publicosPcd
+        : [...PUBLICOS_PCD];
 
     const prompt = `Você é formador do Currículo de Computação (Educação Digital e Midiática) da Rede Municipal de Potim/SP, alinhado à BNCC Computação (Complemento à BNCC), à Resolução CNE nº 1/2022 e aos Parâmetros Curriculares Nacionais (PCN) do Ensino Fundamental — 1º ao 5º ano (primeiro e segundo ciclos) e 6º ao 9º ano (terceiro e quarto ciclos).
 
@@ -64,7 +69,7 @@ Em "conexao", explique em 2 a 3 frases como a habilidade da BNCC do componente (
 Em "plugada", proponha a atividade COM tecnologia digital (computador, tablet, celular, robô ou apps gratuitos), viável na rede pública.
 Em "desplugadaAtividade", proponha a MESMA aprendizagem SEM nenhum dispositivo (papel, corpo, cartões, giz, jogos).
 Em "desplugada", resuma em uma frase a versão desplugada.
-Em "adaptacoesPcd", proponha adaptações inclusivas da MESMA prática para estudantes público-alvo da Educação Especial (PCD), na perspectiva da educação inclusiva (LBI 13.146/2015 e Política Nacional de Educação Especial Inclusiva). Gere um item para CADA um destes públicos, nesta ordem: ${PUBLICOS_PCD.join("; ")}. Em cada item: "publico" com o nome do público, "sugestoes" com 3 a 4 adaptações concretas de como realizar as atividades plugada e desplugada (ajustes de material, comunicação, tempo, avaliação e mediação, incluindo tecnologia assistiva gratuita quando fizer sentido) e "recursos" com os recursos/apoios necessários em uma frase.
+Em "adaptacoesPcd", proponha adaptações inclusivas da MESMA prática para estudantes público-alvo da Educação Especial (PCD), na perspectiva da educação inclusiva (LBI 13.146/2015 e Política Nacional de Educação Especial Inclusiva). Gere um item para CADA um destes públicos (apenas estes, nenhum outro), nesta ordem: ${publicos.join("; ")}. Em cada item: "publico" com o nome do público, "sugestoes" com 3 a 4 adaptações concretas de como realizar as atividades plugada e desplugada (ajustes de material, comunicação, tempo, avaliação e mediação, incluindo tecnologia assistiva gratuita quando fizer sentido) e "recursos" com os recursos/apoios necessários em uma frase.
 
 Regras: linguagem clara para professores da rede pública; poucos recursos; nenhuma etapa em markdown (texto puro, sem asteriscos e sem numeração); 4 a 6 etapas em cada atividade; "etapas" geral deve trazer a sequência didática da aula inteira (4 a 6 frases).
 
