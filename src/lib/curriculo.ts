@@ -279,10 +279,6 @@ export const PUBLICOS_PCD = [
   "Altas habilidades/superdotação",
 ] as const;
 
-/** Palavras-chave para reconhecer o público PCD retornado pela IA. */
-const CHAVES_PCD: [string, RegExp][] = PUBLICOS_PCD.map((p) => [p, /(?:)/]) as [string, RegExp][];
-void CHAVES_PCD;
-
 /** Converte um nome livre de público PCD para o rótulo oficial correspondente. */
 export function canonicalizarPublico(nome: string): string | null {
   const t = (nome ?? "")
