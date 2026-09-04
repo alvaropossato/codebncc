@@ -16,17 +16,16 @@ export type BnccItem = {
   o: string[];
   /** texto da habilidade */
   t: string;
-  /** origem: BNCC, Currículo Paulista ou ambos */
-  f?: Fonte;
+  /** origem: bncc, paulista ou ambos (quando o código consta nas duas bases) */
+  f?: string;
 };
 
 /** Fonte curricular escolhida pelo professor. */
-export type Fonte = "bncc" | "paulista" | "ambos";
+export type Fonte = "bncc" | "paulista";
 
 export const FONTES: { value: Fonte; label: string; curto: string }[] = [
   { value: "bncc", label: "BNCC", curto: "BNCC" },
   { value: "paulista", label: "Currículo Paulista", curto: "Paulista" },
-  { value: "ambos", label: "BNCC + Currículo Paulista", curto: "Ambos" },
 ];
 
 let cache: BnccItem[] | null = null;
@@ -37,7 +36,7 @@ export async function carregarBncc(): Promise<BnccItem[]> {
     const mod = await import("./bncc-ef.json");
     cache = ((mod.default ?? mod) as unknown as BnccItem[]).map((i) => ({
       ...i,
-      f: "bncc" as Fonte,
+      f: "bncc",
     }));
   }
   return cache;
@@ -48,16 +47,19 @@ export async function carregarPaulista(): Promise<BnccItem[]> {
     const mod = await import("./curriculo-paulista.json");
     cachePaulista = ((mod.default ?? mod) as unknown as BnccItem[]).map((i) => ({
       ...i,
-      f: "paulista" as Fonte,
+      f: "paulista",
     }));
   }
   return cachePaulista;
 }
 
 /** Carrega o conjunto de habilidades conforme a fonte escolhida. */
-export async function carregarCurriculo(fonte: Fonte): Promise<BnccItem[]> {
-  if (fonte === "bncc") return carregarBncc();
-  if (fonte === "paulista") return carregarPaulista();
+export async function carregarCurriculo(fontes: Fonte[]): Promise<BnccItem[]> {
+  const usaBncc = fontes.includes("bncc");
+  const usaPaulista = fontes.includes("paulista");
+  if (usaBncc && !usaPaulista) return carregarBncc();
+  if (usaPaulista && !usaBncc) return carregarPaulista();
+  if (!usaBncc && !usaPaulista) return [];
   const [b, p] = await Promise.all([carregarBncc(), carregarPaulista()]);
   const mapa = new Map<string, BnccItem>();
   for (const i of b) mapa.set(i.c, i);

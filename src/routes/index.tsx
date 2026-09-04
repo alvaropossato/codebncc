@@ -69,7 +69,7 @@ function Index() {
   const [salvaId, setSalvaId] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
   const [publicosPcd, setPublicosPcd] = useState<string[]>([...PUBLICOS_PCD]);
-  const [fonte, setFonte] = useState<Fonte>("ambos");
+  const [fontes, setFontes] = useState<Fonte[]>(["bncc", "paulista"]);
 
   const alternarPublico = (p: string) =>
     setPublicosPcd((atual) =>
@@ -80,12 +80,15 @@ function Index() {
   const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
 
   const { data: baseBncc = [] } = useQuery({
-    queryKey: ["curriculo", fonte],
-    queryFn: () => carregarCurriculo(fonte),
+    queryKey: ["curriculo", [...fontes].sort().join("+")],
+    queryFn: () => carregarCurriculo(fontes),
     staleTime: Infinity,
   });
 
-  const rotuloFonte = FONTES.find((f) => f.value === fonte)?.curto ?? "BNCC";
+  const rotuloFonte =
+    FONTES.filter((f) => fontes.includes(f.value))
+      .map((f) => f.curto)
+      .join(" + ") || "Nenhuma fonte";
 
   const itensBncc = filtrar(baseBncc, disciplina, serie);
   const unidades = unidadesTematicas(itensBncc);
@@ -287,29 +290,37 @@ COMPUTAÇÃO
                 <div
                   role="group"
                   aria-label="Fonte curricular"
-                  className="mt-2 grid grid-cols-3 gap-2"
+                  className="mt-2 grid grid-cols-2 gap-2"
                 >
-                  {FONTES.map((f) => (
-                    <button
-                      key={f.value}
-                      type="button"
-                      title={f.label}
-                      aria-pressed={fonte === f.value}
-                      onClick={() => {
-                        setFonte(f.value);
-                        setUnidade("");
-                        setObjeto("");
-                        setHabilidade("");
-                      }}
-                      className={`min-h-10 rounded-full border px-2 py-2 text-[11px] leading-tight transition ${
-                        fonte === f.value
-                          ? "border-aurora/60 bg-aurora/15 text-aurora"
-                          : "border-white/10 bg-white/5 text-mist/60 hover:border-white/25"
-                      }`}
-                    >
-                      {f.curto}
-                    </button>
-                  ))}
+                  {FONTES.map((f) => {
+                    const ativa = fontes.includes(f.value);
+                    return (
+                      <button
+                        key={f.value}
+                        type="button"
+                        title={f.label}
+                        aria-pressed={ativa}
+                        onClick={() => {
+                          setFontes((atual) => {
+                            const proxima = ativa
+                              ? atual.filter((x) => x !== f.value)
+                              : [...atual, f.value];
+                            return proxima.length ? proxima : atual;
+                          });
+                          setUnidade("");
+                          setObjeto("");
+                          setHabilidade("");
+                        }}
+                        className={`min-h-10 rounded-full border px-2 py-2 text-[11px] leading-tight transition ${
+                          ativa
+                            ? "border-aurora/60 bg-aurora/15 text-aurora"
+                            : "border-white/10 bg-white/5 text-mist/60 hover:border-white/25"
+                        }`}
+                      >
+                        {f.curto}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
