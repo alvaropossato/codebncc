@@ -115,6 +115,7 @@ function Index() {
           objetoConhecimento: objetoAtual,
           habilidadeCodigo: habAtual?.c ?? "",
           habilidadeTexto: habAtual?.t ?? "",
+          publicosPcd,
         },
       }),
     onSuccess: async (p) => {
