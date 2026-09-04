@@ -357,6 +357,50 @@ COMPUTAÇÃO
                 placeholder="Foco opcional: ex. algoritmos, dados e privacidade, fake news…"
               />
 
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50">
+                    Adaptações PCD
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setPublicosPcd(
+                        publicosPcd.length === PUBLICOS_PCD.length ? [] : [...PUBLICOS_PCD],
+                      )
+                    }
+                    className="text-[11px] text-aurora hover:underline"
+                  >
+                    {publicosPcd.length === PUBLICOS_PCD.length ? "Limpar" : "Selecionar todos"}
+                  </button>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {PUBLICOS_PCD.map((p) => {
+                    const ativo = publicosPcd.includes(p);
+                    return (
+                      <button
+                        key={p}
+                        type="button"
+                        aria-pressed={ativo}
+                        onClick={() => alternarPublico(p)}
+                        className={`rounded-full border px-3 py-1.5 text-[11px] transition-colors ${
+                          ativo
+                            ? "border-aurora/60 bg-aurora/15 text-white"
+                            : "border-white/10 text-mist/55 hover:border-aurora/30"
+                        }`}
+                      >
+                        {p}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="mt-2 text-[11px] text-mist/40">
+                  {publicosPcd.length === 0
+                    ? "Nenhum público selecionado: a prática virá com todas as adaptações."
+                    : `A IA gerará adaptações apenas para ${publicosPcd.length} público(s).`}
+                </p>
+              </div>
+
               <button
                 onClick={() => mutation.mutate()}
                 disabled={mutation.isPending}
