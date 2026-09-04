@@ -10,6 +10,7 @@ import {
   DURACOES,
   conteudosPara,
   TEMAS_TRANSVERSAIS,
+  PUBLICOS_PCD,
   type Pratica,
 } from "@/lib/curriculo";
 import {
