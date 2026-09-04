@@ -63,6 +63,12 @@ function Index() {
   const [link, setLink] = useState<string | null>(null);
   const [salvaId, setSalvaId] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
+  const [publicosPcd, setPublicosPcd] = useState<string[]>([...PUBLICOS_PCD]);
+
+  const alternarPublico = (p: string) =>
+    setPublicosPcd((atual) =>
+      atual.includes(p) ? atual.filter((x) => x !== p) : [...atual, p],
+    );
 
   const conteudos = conteudosPara(disciplina, serie);
   const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
