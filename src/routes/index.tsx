@@ -272,17 +272,20 @@ COMPUTAÇÃO
                 </Campo>
               </div>
 
-              <Campo label="Fonte curricular" id="fonte">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50">
+                  Fonte curricular
+                </span>
                 <div
-                  id="fonte"
                   role="group"
                   aria-label="Fonte curricular"
-                  className="grid grid-cols-3 gap-2"
+                  className="mt-2 grid grid-cols-3 gap-2"
                 >
                   {FONTES.map((f) => (
                     <button
                       key={f.value}
                       type="button"
+                      title={f.label}
                       aria-pressed={fonte === f.value}
                       onClick={() => {
                         setFonte(f.value);
@@ -300,7 +303,8 @@ COMPUTAÇÃO
                     </button>
                   ))}
                 </div>
-              </Campo>
+              </div>
+
 
               {unidades.length > 0 && (
                 <>
