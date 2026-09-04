@@ -16,16 +16,56 @@ export type BnccItem = {
   o: string[];
   /** texto da habilidade */
   t: string;
+  /** origem: BNCC, Currículo Paulista ou ambos */
+  f?: Fonte;
 };
 
+/** Fonte curricular escolhida pelo professor. */
+export type Fonte = "bncc" | "paulista" | "ambos";
+
+export const FONTES: { value: Fonte; label: string; curto: string }[] = [
+  { value: "bncc", label: "BNCC", curto: "BNCC" },
+  { value: "paulista", label: "Currículo Paulista", curto: "Paulista" },
+  { value: "ambos", label: "BNCC + Currículo Paulista", curto: "Ambos" },
+];
+
 let cache: BnccItem[] | null = null;
+let cachePaulista: BnccItem[] | null = null;
 
 export async function carregarBncc(): Promise<BnccItem[]> {
   if (!cache) {
     const mod = await import("./bncc-ef.json");
-    cache = (mod.default ?? mod) as unknown as BnccItem[];
+    cache = ((mod.default ?? mod) as unknown as BnccItem[]).map((i) => ({
+      ...i,
+      f: "bncc" as Fonte,
+    }));
   }
   return cache;
+}
+
+export async function carregarPaulista(): Promise<BnccItem[]> {
+  if (!cachePaulista) {
+    const mod = await import("./curriculo-paulista.json");
+    cachePaulista = ((mod.default ?? mod) as unknown as BnccItem[]).map((i) => ({
+      ...i,
+      f: "paulista" as Fonte,
+    }));
+  }
+  return cachePaulista;
+}
+
+/** Carrega o conjunto de habilidades conforme a fonte escolhida. */
+export async function carregarCurriculo(fonte: Fonte): Promise<BnccItem[]> {
+  if (fonte === "bncc") return carregarBncc();
+  if (fonte === "paulista") return carregarPaulista();
+  const [b, p] = await Promise.all([carregarBncc(), carregarPaulista()]);
+  const mapa = new Map<string, BnccItem>();
+  for (const i of b) mapa.set(i.c, i);
+  for (const i of p) {
+    const existente = mapa.get(i.c);
+    mapa.set(i.c, existente ? { ...existente, f: "ambos" } : i);
+  }
+  return [...mapa.values()];
 }
 
 /** "3º ano" -> 3 ; Educação Infantil -> null */
@@ -39,6 +79,7 @@ export function filtrar(itens: BnccItem[], disciplina: string, serie: string): B
   if (ano === null) return [];
   return itens.filter((i) => i.d === disciplina && i.a.includes(ano));
 }
+
 
 function unicos(v: string[]): string[] {
   return [...new Set(v.filter(Boolean))].sort((a, b) => a.localeCompare(b, "pt-BR"));

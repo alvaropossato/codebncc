@@ -21,7 +21,9 @@ const schema = z.object({
   objetoConhecimento: z.string().max(300).optional().default(""),
   habilidadeCodigo: z.string().max(20).optional().default(""),
   habilidadeTexto: z.string().max(1200).optional().default(""),
+  fonteCurricular: z.string().max(60).optional().default("BNCC"),
   publicosPcd: z.array(z.string().max(120)).optional().default([]),
+
 });
 
 function normAtividade(a: unknown): Atividade {
@@ -52,9 +54,10 @@ Gere UMA prática pedagógica transversal, em português do Brasil, para:
 - Componente/disciplina: ${data.disciplina}
 - Etapa/ano: ${data.serie}
 - Conteúdo que o professor quer desenvolver: ${data.conteudo}
-- Unidade temática da BNCC (${data.disciplina}): ${data.unidadeTematica || "não informada"}
-- Objeto de conhecimento da BNCC: ${data.objetoConhecimento || "não informado"}
-- Habilidade da BNCC do componente: ${data.habilidadeCodigo ? `${data.habilidadeCodigo} — ${data.habilidadeTexto}` : "não informada"}
+- Referencial curricular escolhido pelo professor: ${data.fonteCurricular}
+- Unidade temática (${data.fonteCurricular} — ${data.disciplina}): ${data.unidadeTematica || "não informada"}
+- Objeto de conhecimento (${data.fonteCurricular}): ${data.objetoConhecimento || "não informado"}
+- Habilidade do componente (${data.fonteCurricular}): ${data.habilidadeCodigo ? `${data.habilidadeCodigo} — ${data.habilidadeTexto}` : "não informada"}
 
 
 - Tema transversal dos PCN: ${data.tema}

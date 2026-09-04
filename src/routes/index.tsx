@@ -14,12 +14,15 @@ import {
   type Pratica,
 } from "@/lib/curriculo";
 import {
-  carregarBncc,
+  carregarCurriculo,
+  FONTES,
   filtrar,
   unidadesTematicas,
   objetosDeConhecimento,
   habilidades as habilidadesDe,
+  type Fonte,
 } from "@/lib/bncc";
+
 import { PraticaView } from "@/components/PraticaView";
 import { salvarPratica, type Contexto } from "@/lib/praticas";
 import { useAuth } from "@/hooks/useAuth";
@@ -64,6 +67,7 @@ function Index() {
   const [salvaId, setSalvaId] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
   const [publicosPcd, setPublicosPcd] = useState<string[]>([...PUBLICOS_PCD]);
+  const [fonte, setFonte] = useState<Fonte>("ambos");
 
   const alternarPublico = (p: string) =>
     setPublicosPcd((atual) =>
@@ -74,10 +78,12 @@ function Index() {
   const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
 
   const { data: baseBncc = [] } = useQuery({
-    queryKey: ["bncc-ef"],
-    queryFn: carregarBncc,
+    queryKey: ["curriculo", fonte],
+    queryFn: () => carregarCurriculo(fonte),
     staleTime: Infinity,
   });
+
+  const rotuloFonte = FONTES.find((f) => f.value === fonte)?.curto ?? "BNCC";
 
   const itensBncc = filtrar(baseBncc, disciplina, serie);
   const unidades = unidadesTematicas(itensBncc);
@@ -86,6 +92,7 @@ function Index() {
   const objetoAtual = objetos.includes(objeto) ? objeto : (objetos[0] ?? "");
   const habs = habilidadesDe(itensBncc, unidadeAtual, objetoAtual);
   const habAtual = habs.find((h) => h.c === habilidade) ?? habs[0];
+
 
   const ctx: Contexto = {
     disciplina,
@@ -115,7 +122,9 @@ function Index() {
           objetoConhecimento: objetoAtual,
           habilidadeCodigo: habAtual?.c ?? "",
           habilidadeTexto: habAtual?.t ?? "",
+          fonteCurricular: rotuloFonte,
           publicosPcd,
+
         },
       }),
     onSuccess: async (p) => {
@@ -263,9 +272,44 @@ COMPUTAÇÃO
                 </Campo>
               </div>
 
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50">
+                  Fonte curricular
+                </span>
+                <div
+                  role="group"
+                  aria-label="Fonte curricular"
+                  className="mt-2 grid grid-cols-3 gap-2"
+                >
+                  {FONTES.map((f) => (
+                    <button
+                      key={f.value}
+                      type="button"
+                      title={f.label}
+                      aria-pressed={fonte === f.value}
+                      onClick={() => {
+                        setFonte(f.value);
+                        setUnidade("");
+                        setObjeto("");
+                        setHabilidade("");
+                      }}
+                      className={`min-h-10 rounded-full border px-2 py-2 text-[11px] leading-tight transition ${
+                        fonte === f.value
+                          ? "border-aurora/60 bg-aurora/15 text-aurora"
+                          : "border-white/10 bg-white/5 text-mist/60 hover:border-white/25"
+                      }`}
+                    >
+                      {f.curto}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+
               {unidades.length > 0 && (
                 <>
-                  <Campo label="Unidade temática (BNCC)" id="unidade">
+                  <Campo label={`Unidade temática (${rotuloFonte})`} id="unidade">
+
                     <select
                       id="unidade"
                       value={unidadeAtual}
@@ -284,7 +328,7 @@ COMPUTAÇÃO
                     </select>
                   </Campo>
 
-                  <Campo label="Objeto de conhecimento (BNCC)" id="objeto">
+                  <Campo label={`Objeto de conhecimento (${rotuloFonte})`} id="objeto">
                     <select
                       id="objeto"
                       value={objetoAtual}
@@ -302,7 +346,7 @@ COMPUTAÇÃO
                     </select>
                   </Campo>
 
-                  <Campo label="Habilidade (BNCC)" id="habilidade">
+                  <Campo label={`Habilidade (${rotuloFonte})`} id="habilidade">
                     <select
                       id="habilidade"
                       value={habAtual?.c ?? ""}
