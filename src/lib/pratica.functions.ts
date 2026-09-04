@@ -112,15 +112,6 @@ Responda SOMENTE com JSON válido no formato:
       plugada: normAtividade(parsed.plugada),
       desplugadaAtividade: normAtividade(parsed.desplugadaAtividade),
       desplugada: parsed.desplugada ?? "",
-      adaptacoesPcd: Array.isArray(parsed.adaptacoesPcd)
-        ? parsed.adaptacoesPcd.map((a): AdaptacaoPcd => {
-            const o = (a ?? {}) as Partial<AdaptacaoPcd>;
-            return {
-              publico: o.publico ?? "",
-              sugestoes: Array.isArray(o.sugestoes) ? o.sugestoes : [],
-              recursos: o.recursos ?? "",
-            };
-          })
-        : [],
+      adaptacoesPcd: normAdaptacoes(parsed.adaptacoesPcd, publicos),
     };
   });
