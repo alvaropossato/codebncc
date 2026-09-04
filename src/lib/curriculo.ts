@@ -278,3 +278,19 @@ export const PUBLICOS_PCD = [
   "Transtorno do Espectro Autista (TEA)",
   "Altas habilidades/superdotação",
 ] as const;
+
+/** Converte um nome livre de público PCD para o rótulo oficial correspondente. */
+export function canonicalizarPublico(nome: string): string | null {
+  const t = (nome ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  if (!t.trim()) return null;
+  if (/(visual|cegueira|baixa visao)/.test(t)) return PUBLICOS_PCD[0];
+  if (/(auditiv|surd)/.test(t)) return PUBLICOS_PCD[1];
+  if (/(intelectual|cognitiv)/.test(t)) return PUBLICOS_PCD[2];
+  if (/(fisic|motor)/.test(t)) return PUBLICOS_PCD[3];
+  if (/(autis|tea\b|espectro)/.test(t)) return PUBLICOS_PCD[4];
+  if (/(altas habilidades|superdota)/.test(t)) return PUBLICOS_PCD[5];
+  return null;
+}

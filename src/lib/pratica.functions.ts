@@ -4,6 +4,7 @@ import {
   CODIGOS,
   PUBLICOS_PCD,
   SERIES,
+  canonicalizarPublico,
   type AdaptacaoPcd,
   type Atividade,
   type Pratica,
@@ -33,6 +34,24 @@ function normAtividade(a: unknown): Atividade {
     materiais: o.materiais ?? "",
     etapas: Array.isArray(o.etapas) ? o.etapas : [],
   };
+}
+
+/** Mantém apenas as adaptações dos públicos escolhidos, na ordem escolhida, sem duplicatas. */
+function normAdaptacoes(lista: unknown, publicos: string[]): AdaptacaoPcd[] {
+  if (publicos.length === 0) return [];
+  const itens = Array.isArray(lista) ? lista : [];
+  const porPublico = new Map<string, AdaptacaoPcd>();
+  for (const item of itens) {
+    const o = (item ?? {}) as Partial<AdaptacaoPcd>;
+    const canonico = canonicalizarPublico(o.publico ?? "");
+    if (!canonico || !publicos.includes(canonico) || porPublico.has(canonico)) continue;
+    porPublico.set(canonico, {
+      publico: canonico,
+      sugestoes: Array.isArray(o.sugestoes) ? o.sugestoes.filter(Boolean) : [],
+      recursos: o.recursos ?? "",
+    });
+  }
+  return publicos.map((p) => porPublico.get(p)).filter((a): a is AdaptacaoPcd => !!a);
 }
 
 export const gerarPratica = createServerFn({ method: "POST" })
@@ -112,15 +131,6 @@ Responda SOMENTE com JSON válido no formato:
       plugada: normAtividade(parsed.plugada),
       desplugadaAtividade: normAtividade(parsed.desplugadaAtividade),
       desplugada: parsed.desplugada ?? "",
-      adaptacoesPcd: Array.isArray(parsed.adaptacoesPcd)
-        ? parsed.adaptacoesPcd.map((a): AdaptacaoPcd => {
-            const o = (a ?? {}) as Partial<AdaptacaoPcd>;
-            return {
-              publico: o.publico ?? "",
-              sugestoes: Array.isArray(o.sugestoes) ? o.sugestoes : [],
-              recursos: o.recursos ?? "",
-            };
-          })
-        : [],
+      adaptacoesPcd: normAdaptacoes(parsed.adaptacoesPcd, publicos),
     };
   });
