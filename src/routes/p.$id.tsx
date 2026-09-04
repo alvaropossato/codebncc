@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { carregarPratica } from "@/lib/praticas";
 import { PraticaView } from "@/components/PraticaView";
+import codeLogoAsset from "@/assets/code-logo.png.asset.json";
 
 export const Route = createFileRoute("/p/$id")({
   head: () => ({
@@ -44,8 +45,8 @@ function Compartilhada() {
       <div className="pointer-events-none absolute inset-0 aurora-glow" />
       <div className="relative mx-auto max-w-4xl px-6 py-8">
         <div className="no-print mb-5 flex items-center justify-between">
-          <Link to="/" className="font-display text-base font-bold text-white">
-            CODE
+          <Link to="/" aria-label="CODE — início">
+            <img src={codeLogoAsset.url} alt="CODE" className="size-16 object-contain" />
           </Link>
           <Link
             to="/"

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { listarMinhasPraticas, type PraticaSalva } from "@/lib/praticas";
 import { PUBLICOS_PCD } from "@/lib/curriculo";
+import codeLogoAsset from "@/assets/code-logo.png.asset.json";
 
 export const Route = createFileRoute("/adaptacoes")({
   head: () => ({
@@ -92,8 +93,8 @@ function Adaptacoes() {
       <div className="pointer-events-none absolute inset-0 aurora-glow" />
       <div className="relative mx-auto max-w-4xl px-6 py-8">
         <div className="mb-6 flex items-center justify-between">
-          <Link to="/" className="font-display text-base font-bold text-white">
-            CODE
+          <Link to="/" aria-label="CODE — início">
+            <img src={codeLogoAsset.url} alt="CODE" className="size-16 object-contain" />
           </Link>
           <div className="flex items-center gap-2">
             <Link
