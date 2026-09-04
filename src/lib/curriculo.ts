@@ -32,6 +32,18 @@ export const EIXOS = [
   "Cultura Digital",
 ] as const;
 
+export type Eixo = (typeof EIXOS)[number];
+
+/** Síntese dos conteúdos desenvolvidos em cada eixo da BNCC Computação. */
+export const RESUMOS_EIXOS: Record<Eixo, string> = {
+  "Pensamento Computacional":
+    "Desenvolve a resolução de problemas por meio de decomposição, reconhecimento de padrões, abstração, algoritmos, programação e criação de soluções.",
+  "Mundo Digital":
+    "Explora como dados são representados, processados, armazenados e transmitidos, além do funcionamento de dispositivos, sistemas, redes e internet.",
+  "Cultura Digital":
+    "Promove o uso crítico, ético, seguro e responsável das tecnologias, incluindo comunicação, autoria, cidadania, privacidade e impactos no cotidiano.",
+};
+
 export const DURACOES = ["1 aula", "2 aulas", "4 aulas", "Projeto"] as const;
 
 /** Códigos de habilidades do Currículo de Computação de Potim, por ano. */
