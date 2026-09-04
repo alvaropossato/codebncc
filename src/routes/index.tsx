@@ -324,7 +324,7 @@ COMPUTAÇÃO
                     </select>
                   </Campo>
 
-                  <Campo label="Objeto de conhecimento (BNCC)" id="objeto">
+                  <Campo label={`Objeto de conhecimento (${rotuloFonte})`} id="objeto">
                     <select
                       id="objeto"
                       value={objetoAtual}
@@ -342,7 +342,7 @@ COMPUTAÇÃO
                     </select>
                   </Campo>
 
-                  <Campo label="Habilidade (BNCC)" id="habilidade">
+                  <Campo label={`Habilidade (${rotuloFonte})`} id="habilidade">
                     <select
                       id="habilidade"
                       value={habAtual?.c ?? ""}
