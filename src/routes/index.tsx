@@ -67,6 +67,7 @@ function Index() {
   const [salvaId, setSalvaId] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
   const [publicosPcd, setPublicosPcd] = useState<string[]>([...PUBLICOS_PCD]);
+  const [fonte, setFonte] = useState<Fonte>("ambos");
 
   const alternarPublico = (p: string) =>
     setPublicosPcd((atual) =>
@@ -77,10 +78,12 @@ function Index() {
   const conteudoAtual = conteudos.includes(conteudo) ? conteudo : (conteudos[0] ?? "");
 
   const { data: baseBncc = [] } = useQuery({
-    queryKey: ["bncc-ef"],
-    queryFn: carregarBncc,
+    queryKey: ["curriculo", fonte],
+    queryFn: () => carregarCurriculo(fonte),
     staleTime: Infinity,
   });
+
+  const rotuloFonte = FONTES.find((f) => f.value === fonte)?.curto ?? "BNCC";
 
   const itensBncc = filtrar(baseBncc, disciplina, serie);
   const unidades = unidadesTematicas(itensBncc);
@@ -89,6 +92,7 @@ function Index() {
   const objetoAtual = objetos.includes(objeto) ? objeto : (objetos[0] ?? "");
   const habs = habilidadesDe(itensBncc, unidadeAtual, objetoAtual);
   const habAtual = habs.find((h) => h.c === habilidade) ?? habs[0];
+
 
   const ctx: Contexto = {
     disciplina,
