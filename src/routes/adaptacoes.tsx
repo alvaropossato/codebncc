@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { listarMinhasPraticas, type PraticaSalva } from "@/lib/praticas";
-import { PUBLICOS_PCD } from "@/lib/curriculo";
+import { PUBLICOS_PCD, canonicalizarPublico } from "@/lib/curriculo";
 import codeLogoAsset from "@/assets/code-logo.png.asset.json";
 
 export const Route = createFileRoute("/adaptacoes")({
@@ -50,7 +50,7 @@ function achatar(praticas: PraticaSalva[]): Linha[] {
       disciplina: p.disciplina,
       habilidadeCodigo: p.dados?.codigo || p.habilidade_codigo || "",
       habilidadeTexto: p.dados?.habilidade || p.habilidade_texto || "",
-      publico: a.publico,
+      publico: canonicalizarPublico(a.publico) ?? a.publico,
       sugestoes: a.sugestoes ?? [],
       recursos: a.recursos ?? "",
       criadoEm: p.created_at,
