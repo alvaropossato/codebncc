@@ -94,23 +94,23 @@ export function PraticaView({
   const [copiado, setCopiado] = useState(false);
 
   return (
-    <div className="print-area">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+    <div className="print-area min-w-0 overflow-hidden">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+        <div className="flex min-w-0 items-center gap-2">
           <span className="flex items-center gap-1.5 rounded-full bg-aurora/15 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-aurora">
             <span className="size-1.5 rounded-full bg-aurora" />
             Prática
           </span>
-          <span className="text-xs text-mist/40">{pratica.codigo}</span>
+          <span className="min-w-0 truncate text-xs text-mist/40">{pratica.codigo}</span>
         </div>
-        <div className="no-print flex flex-wrap gap-2">
+        <div className="no-print grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           <button
             onClick={() => {
               navigator.clipboard.writeText(toTexto(pratica));
               setCopiado(true);
               setTimeout(() => setCopiado(false), 1800);
             }}
-            className="rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-mist/80 hover:border-aurora/40"
+            className="min-h-11 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80 hover:border-aurora/40 sm:min-h-0 sm:py-1.5"
           >
             {copiado ? "Copiado!" : "Copiar"}
           </button>
@@ -118,14 +118,14 @@ export function PraticaView({
             <button
               onClick={onCompartilhar}
               disabled={compartilhando}
-              className="rounded-lg border border-aurora/40 bg-aurora/10 px-3 py-1.5 text-xs font-semibold text-aurora disabled:opacity-60"
+              className="min-h-11 rounded-lg border border-aurora/40 bg-aurora/10 px-3 py-2 text-xs font-semibold text-aurora disabled:opacity-60 sm:min-h-0 sm:py-1.5"
             >
               {compartilhando ? "Gerando link…" : "Compartilhar"}
             </button>
           )}
           <button
             onClick={() => window.print()}
-            className="rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-mist/80 hover:border-aurora/40"
+            className="col-span-2 min-h-11 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80 hover:border-aurora/40 sm:min-h-0 sm:py-1.5"
           >
             Salvar em PDF / Imprimir
           </button>
@@ -133,11 +133,11 @@ export function PraticaView({
       </div>
 
       {linkCompartilhado && (
-        <div className="no-print mt-3 flex flex-wrap items-center gap-2 rounded-xl border border-aurora/25 bg-aurora/[0.07] p-3">
-          <input readOnly value={linkCompartilhado} className="field flex-1 text-xs" />
+        <div className="no-print mt-3 grid grid-cols-2 gap-2 rounded-xl border border-aurora/25 bg-aurora/[0.07] p-3 sm:flex sm:flex-wrap sm:items-center">
+          <input readOnly value={linkCompartilhado} className="field col-span-2 min-w-0 text-xs sm:flex-1" />
           <button
             onClick={() => navigator.clipboard.writeText(linkCompartilhado)}
-            className="rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80"
+            className="min-h-11 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80"
           >
             Copiar link
           </button>
@@ -145,20 +145,20 @@ export function PraticaView({
             href={`https://wa.me/?text=${encodeURIComponent(`${pratica.titulo} — ${linkCompartilhado}`)}`}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80"
+            className="flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80"
           >
             WhatsApp
           </a>
           <a
             href={`mailto:?subject=${encodeURIComponent(pratica.titulo)}&body=${encodeURIComponent(linkCompartilhado)}`}
-            className="rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80"
+            className="col-span-2 flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-mist/80 sm:col-span-1"
           >
             E-mail
           </a>
         </div>
       )}
 
-      <h2 className="mt-5 font-display text-2xl font-bold leading-tight text-white">
+      <h2 className="mt-5 break-words font-display text-xl font-bold leading-tight text-white sm:text-2xl">
         {pratica.titulo}
       </h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-mist/65">{pratica.resumo}</p>
@@ -167,7 +167,7 @@ export function PraticaView({
         {[ctx.serie, ctx.duracao, ctx.disciplina, ctx.conteudo].filter(Boolean).map((t) => (
           <span
             key={t}
-            className="rounded-full border border-white/10 bg-ink-soft/60 px-3 py-1 text-xs text-mist/70"
+            className="max-w-full break-words rounded-full border border-white/10 bg-ink-soft/60 px-3 py-1 text-xs text-mist/70"
           >
             {t}
           </span>

@@ -91,12 +91,12 @@ function Adaptacoes() {
   return (
     <div className="relative min-h-screen bg-ink font-sans text-mist">
       <div className="pointer-events-none absolute inset-0 aurora-glow" />
-      <div className="relative mx-auto max-w-4xl px-6 py-8">
-        <div className="mb-6 flex items-center justify-between">
+      <div className="relative mx-auto max-w-4xl px-4 py-5 sm:px-6 sm:py-8">
+        <div className="mb-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <Link to="/" aria-label="CODE — início">
             <img src={codeLogoAsset.url} alt="CODE" className="size-16 object-contain" />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <Link
               to="/historico"
               className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/70 hover:border-aurora/40"
@@ -134,7 +134,7 @@ function Adaptacoes() {
 
         {user && (
           <>
-            <div className="panel mt-5 grid gap-3 rounded-3xl p-4 sm:grid-cols-3">
+            <div className="panel mt-5 grid gap-3 rounded-2xl p-4 sm:grid-cols-3 sm:rounded-3xl">
               <label className="text-xs text-mist/50">
                 Tipo de necessidade
                 <select
@@ -194,7 +194,7 @@ function Adaptacoes() {
 
             <div className="mt-3 space-y-4">
               {filtradas.map((l, i) => (
-                <article key={`${l.praticaId}-${l.publico}-${i}`} className="panel rounded-3xl p-5">
+                <article key={`${l.praticaId}-${l.publico}-${i}`} className="panel min-w-0 rounded-2xl p-4 sm:rounded-3xl sm:p-5">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="rounded-full bg-aurora/15 px-3 py-1 text-[11px] font-semibold text-aurora">
                       {l.publico}
@@ -208,7 +208,7 @@ function Adaptacoes() {
                       {l.disciplina} · {l.serie}
                     </span>
                   </div>
-                  <h2 className="mt-3 font-display text-base font-bold text-white">{l.titulo}</h2>
+                  <h2 className="mt-3 break-words font-display text-base font-bold text-white">{l.titulo}</h2>
                   {l.habilidadeTexto && (
                     <p className="mt-1 text-xs leading-relaxed text-mist/50">{l.habilidadeTexto}</p>
                   )}

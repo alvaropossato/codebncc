@@ -38,12 +38,12 @@ function Historico() {
   return (
     <div className="relative min-h-screen bg-ink font-sans text-mist">
       <div className="pointer-events-none absolute inset-0 aurora-glow" />
-      <div className="relative mx-auto max-w-4xl px-6 py-8">
-        <div className="mb-6 flex items-center justify-between">
+      <div className="relative mx-auto max-w-4xl px-4 py-5 sm:px-6 sm:py-8">
+        <div className="mb-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <Link to="/" aria-label="CODE — início">
             <img src={codeLogoAsset.url} alt="CODE" className="size-16 object-contain" />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <Link
               to="/"
               className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/70 hover:border-aurora/40"
@@ -98,10 +98,10 @@ function Historico() {
           {data?.map((p) => (
             <div
               key={p.id}
-              className="panel flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4"
+              className="panel grid min-w-0 grid-cols-1 gap-4 rounded-2xl p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
             >
-              <div>
-                <p className="font-display text-base font-bold text-white">{p.titulo}</p>
+              <div className="min-w-0">
+                <p className="break-words font-display text-base font-bold text-white">{p.titulo}</p>
                 <p className="mt-1 text-xs text-mist/50">
                   {p.serie} · {p.disciplina} · {p.eixo}
                 </p>
@@ -126,7 +126,7 @@ function Historico() {
                   {new Date(p.created_at).toLocaleDateString("pt-BR")}
                 </p>
               </div>
-              <div className="flex gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:flex">
                 <Link
                   to="/p/$id"
                   params={{ id: p.id }}

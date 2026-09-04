@@ -153,53 +153,53 @@ function Index() {
   const pratica = mutation.data;
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-ink font-sans text-mist">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-ink font-sans text-mist">
       <div className="pointer-events-none absolute inset-0 aurora-glow" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-5 lg:px-10">
-        <header className="no-print flex items-center justify-between">
-          <div className="flex items-center gap-3">
+      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-4 sm:px-6 sm:py-5 lg:px-10">
+        <header className="no-print grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <img
               src={codeLogoAsset.url}
               alt="CODE"
-              className="size-40 rounded-xl object-contain"
+              className="size-28 shrink-0 rounded-xl object-contain sm:size-40"
             />
-            <div>
+             <div className="min-w-0">
               <p className="font-display text-base font-bold leading-none text-white">
                 
               </p>
-              <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-mist/45">
+              <p className="mt-1 text-[10px] uppercase leading-relaxed tracking-[0.16em] text-mist/45 sm:text-[11px] sm:tracking-[0.22em]">
                 BNCC  
 COMPUTAÇÃO
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <nav className="grid grid-cols-3 gap-2 sm:flex sm:items-center" aria-label="Navegação principal">
             <Link
               to="/adaptacoes"
-              className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/75 hover:border-aurora/40"
+              className="flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-2 py-2 text-center text-[11px] leading-tight text-mist/75 hover:border-aurora/40 sm:min-h-0 sm:px-3 sm:py-1.5 sm:text-xs"
             >
               Adaptações PCD
             </Link>
             <Link
               to="/historico"
-              className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-mist/75 hover:border-aurora/40"
+              className="flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-2 py-2 text-center text-[11px] leading-tight text-mist/75 hover:border-aurora/40 sm:min-h-0 sm:px-3 sm:py-1.5 sm:text-xs"
             >
               Meu histórico
             </Link>
             {!user && (
               <Link
                 to="/auth"
-                className="rounded-lg bg-gradient-to-r from-aurora via-aurora2 to-aurora3 px-3 py-1.5 text-xs font-bold text-ink"
+                className="flex min-h-11 items-center justify-center rounded-lg bg-gradient-to-r from-aurora via-aurora2 to-aurora3 px-2 py-2 text-center text-[11px] font-bold text-ink sm:min-h-0 sm:px-3 sm:py-1.5 sm:text-xs"
               >
                 Entrar
               </Link>
             )}
-          </div>
+          </nav>
         </header>
 
-        <main className="mt-8 grid flex-1 gap-5 lg:grid-cols-[420px_1fr]">
-          <section className="panel no-print rounded-3xl p-6">
+        <main className="mt-5 grid min-w-0 flex-1 gap-4 sm:mt-8 sm:gap-5 lg:grid-cols-[420px_minmax(0,1fr)]">
+          <section className="panel no-print min-w-0 rounded-2xl p-4 sm:rounded-3xl sm:p-6">
             <div className="flex items-center gap-2">
               <span className="size-2 rounded-full bg-aurora" />
               <h1 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-white">
@@ -229,7 +229,7 @@ COMPUTAÇÃO
                 </select>
               </Campo>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 min-[390px]:grid-cols-2">
                 <Campo label="Série" id="serie">
                   <select
                     id="serie"
@@ -364,7 +364,7 @@ COMPUTAÇÃO
               />
 
               <div>
-                <div className="flex items-center justify-between gap-2">
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
                   <span className="text-xs font-semibold uppercase tracking-[0.14em] text-mist/50">
                     Adaptações PCD
                   </span>
@@ -375,7 +375,7 @@ COMPUTAÇÃO
                         publicosPcd.length === PUBLICOS_PCD.length ? [] : [...PUBLICOS_PCD],
                       )
                     }
-                    className="text-[11px] text-aurora hover:underline"
+                    className="min-h-10 px-1 text-right text-[11px] leading-tight text-aurora hover:underline"
                   >
                     {publicosPcd.length === PUBLICOS_PCD.length ? "Limpar" : "Selecionar todos"}
                   </button>
@@ -389,7 +389,7 @@ COMPUTAÇÃO
                         type="button"
                         aria-pressed={ativo}
                         onClick={() => alternarPublico(p)}
-                        className={`rounded-full border px-3 py-1.5 text-[11px] transition-colors ${
+                        className={`min-h-10 rounded-full border px-3 py-2 text-[11px] leading-tight transition-colors ${
                           ativo
                             ? "border-aurora/60 bg-aurora/15 text-white"
                             : "border-white/10 text-mist/55 hover:border-aurora/30"
@@ -427,7 +427,7 @@ COMPUTAÇÃO
             </div>
           </section>
 
-          <section className="panel rounded-3xl p-6">
+          <section className="panel min-w-0 rounded-2xl p-4 sm:rounded-3xl sm:p-6">
             {mutation.isError && (
               <p className="text-sm text-aurora3">{(mutation.error as Error).message}</p>
             )}
@@ -459,7 +459,7 @@ COMPUTAÇÃO
           </section>
         </main>
 
-        <footer className="no-print mt-6 flex flex-wrap items-center justify-between gap-2 text-[11px] text-mist/35">
+        <footer className="no-print mt-6 flex flex-col gap-1 text-center text-[11px] leading-relaxed text-mist/35 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:text-left">
           <span>Desenvolvido por Alvaro Possato · Secretaria Municipal de Educação e Cultura de Potim</span>
           <span>BNCC  (1º ao 9º ano) · BNCC Computação</span>
         </footer>
