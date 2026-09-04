@@ -294,18 +294,26 @@ COMPUTAÇÃO
                 >
                   {FONTES.map((f) => {
                     const ativa = fontes.includes(f.value);
+                    const sozinha = ativa && fontes.length === 1;
                     return (
                       <button
                         key={f.value}
                         type="button"
-                        title={f.label}
+                        title={
+                          sozinha
+                            ? `Somar ${FONTES.filter((o) => o.value !== f.value)
+                                .map((o) => o.curto)
+                                .join(" e ")}`
+                            : `Usar ${f.label}`
+                        }
                         aria-pressed={ativa}
                         onClick={() => {
                           setFontes((atual) => {
-                            const proxima = ativa
-                              ? atual.filter((x) => x !== f.value)
-                              : [...atual, f.value];
-                            return proxima.length ? proxima : atual;
+                            const jaAtiva = atual.includes(f.value);
+                            if (!jaAtiva) return [...atual, f.value];
+                            // já ativa: se acompanhada, isola; se sozinha, ativa todas
+                            if (atual.length > 1) return [f.value];
+                            return FONTES.map((o) => o.value);
                           });
                           setUnidade("");
                           setObjeto("");
@@ -322,7 +330,12 @@ COMPUTAÇÃO
                     );
                   })}
                 </div>
+                <p className="mt-2 text-[11px] leading-snug text-mist/40">
+                  Fonte em uso: {rotuloFonte}. Toque para usar só uma; toque de novo
+                  para somar as duas.
+                </p>
               </div>
+
 
 
               <Campo label={`Unidade temática (${rotuloFonte})`} id="unidade">
