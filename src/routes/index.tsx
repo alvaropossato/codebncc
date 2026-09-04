@@ -14,12 +14,15 @@ import {
   type Pratica,
 } from "@/lib/curriculo";
 import {
-  carregarBncc,
+  carregarCurriculo,
+  FONTES,
   filtrar,
   unidadesTematicas,
   objetosDeConhecimento,
   habilidades as habilidadesDe,
+  type Fonte,
 } from "@/lib/bncc";
+
 import { PraticaView } from "@/components/PraticaView";
 import { salvarPratica, type Contexto } from "@/lib/praticas";
 import { useAuth } from "@/hooks/useAuth";
