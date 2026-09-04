@@ -272,9 +272,40 @@ COMPUTAÇÃO
                 </Campo>
               </div>
 
+              <Campo label="Fonte curricular" id="fonte">
+                <div
+                  id="fonte"
+                  role="group"
+                  aria-label="Fonte curricular"
+                  className="grid grid-cols-3 gap-2"
+                >
+                  {FONTES.map((f) => (
+                    <button
+                      key={f.value}
+                      type="button"
+                      aria-pressed={fonte === f.value}
+                      onClick={() => {
+                        setFonte(f.value);
+                        setUnidade("");
+                        setObjeto("");
+                        setHabilidade("");
+                      }}
+                      className={`min-h-10 rounded-full border px-2 py-2 text-[11px] leading-tight transition ${
+                        fonte === f.value
+                          ? "border-aurora/60 bg-aurora/15 text-aurora"
+                          : "border-white/10 bg-white/5 text-mist/60 hover:border-white/25"
+                      }`}
+                    >
+                      {f.curto}
+                    </button>
+                  ))}
+                </div>
+              </Campo>
+
               {unidades.length > 0 && (
                 <>
-                  <Campo label="Unidade temática (BNCC)" id="unidade">
+                  <Campo label={`Unidade temática (${rotuloFonte})`} id="unidade">
+
                     <select
                       id="unidade"
                       value={unidadeAtual}
