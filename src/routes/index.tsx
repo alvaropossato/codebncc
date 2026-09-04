@@ -539,7 +539,18 @@ COMPUTAÇÃO
         </main>
 
         <footer className="no-print mt-6 flex flex-col gap-1 text-center text-[11px] leading-relaxed text-mist/35 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:text-left">
-          <span>Desenvolvido por Alvaro Possato · Secretaria Municipal de Educação e Cultura de Potim</span>
+          <span>
+            Desenvolvido por{" "}
+            <a
+              href="http://lattes.cnpq.br/3420936130216619"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-mist/70"
+            >
+              Alvaro Possato
+            </a>{" "}
+            · Secretaria Municipal de Educação e Cultura de Potim
+          </span>
           <span>BNCC  (1º ao 9º ano) · BNCC Computação</span>
         </footer>
       </div>
