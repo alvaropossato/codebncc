@@ -68,7 +68,7 @@ function Index() {
   const [link, setLink] = useState<string | null>(null);
   const [salvaId, setSalvaId] = useState<string | null>(null);
   const [erroLink, setErroLink] = useState("");
-  const [publicosPcd, setPublicosPcd] = useState<string[]>([...PUBLICOS_PCD]);
+  const [publicosPcd, setPublicosPcd] = useState<string[]>([]);
   const [fontes, setFontes] = useState<Fonte[]>(["bncc", "paulista"]);
 
   const alternarPublico = (p: string) =>
@@ -481,7 +481,7 @@ COMPUTAÇÃO
                 </div>
                 <p className="mt-2 text-[11px] text-mist/40">
                   {publicosPcd.length === 0
-                    ? "Nenhum público selecionado: a prática virá com todas as adaptações."
+                    ? "Nenhum público selecionado: a prática será gerada sem adaptações PCD."
                     : `A IA gerará adaptações apenas para ${publicosPcd.length} público(s).`}
                 </p>
               </div>
